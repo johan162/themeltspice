@@ -1,14 +1,16 @@
 # README 'themeltspice.sh'
-> A color theme handler for the OSX version of the circuit simulator LTSpice.
+> A color theme handler for the OSX version of **LTSpice** circuit simulator.
 
-## Content
+&nbsp;
 
-- Introduction
-- Installation
-- Usage
-- How the script worls
-- Theme file format
-- Theme reference screenshots
+# Content
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How the script works](#how-the-script-works)
+- [Theme file format](#theme-file-format)
+- [Theme reference screenshots](#theme-reference-screenshots)
 
 &nbsp;
 
