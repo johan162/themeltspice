@@ -18,6 +18,8 @@ To set the theme to, say '```darcula```' just run:
 $ ./themeltspice.sh darcula
 ```
 
+Now start **LTSpice** and you will see that the color palette has changed.
+
 To list available themes
 ```
 $ ./themeltspice.sh -l
