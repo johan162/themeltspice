@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #=======================================================================
-# Name: ltspice_theme.sh
+# Name: themeltspice.sh
 # Description: Set and create the color theme for OSX version of LTSpice 
 #=======================================================================
 
@@ -238,7 +238,7 @@ list_themes() {
     do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
             if [[ ${check_name} -eq 0 ]]; then
-                printf "%2d: %s\n" $n ${BASH_REMATCH[1]}
+                printf "%2d. %s\n" $n ${BASH_REMATCH[1]}
             else
                 if [[ ${BASH_REMATCH[1]} == $2 ]]; then
                     return 1
