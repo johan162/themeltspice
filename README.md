@@ -172,7 +172,7 @@ In addition to these major use cases there are some supporting function that are
 If we assume you have installed the script somewhere in your path and copied the distrbuted theme file "```themes.ltt```" to the theme directory (see Installation section above) you can now set the ```softdark```theme as so
 
 ```
-$> themeltspice softdark
+$> themeltspice.sh softdark
 Successfully updated new theme to 'softdark'
 $> _
 ``` 
@@ -180,7 +180,7 @@ $> _
 This will update the current **LTSpice** configuration file with this color schema. To restore back to the default schema just do
 
 ```
-$> themeltspice default
+$> themeltspice.sh default
 Successfully updated new theme to 'default'
 $> _
 ``` 
@@ -198,7 +198,7 @@ and there is nothing more to it. The settings are done in an atomic way so a cha
 By first creating a color schema in **LTSpice** it can then be saved as a new theme. So if you want to store your current settings as the new theme, say, "```mytheme```" you use the "```-d```" (=dump) option as such
 
 ```
-$> themeltspice -d mytheme
+$> themeltspice.sh -d mytheme
 Dumping current color setup from 'com.analog.LTspice.App.plist' to '/Users/<USER>/.ltspice_themes/themes.txt' as theme 'mytheme'
 $> _
 ```
@@ -210,7 +210,7 @@ This will store the new theme at the end of the existing theme file. If a theme 
 To see a list of all themes defined use the "```-l```" option as
 
 ```
-$> themeltspice -l 
+$> themeltspice.sh -l 
 Listing themes in '/Users/<USER>/.ltspice_themes/themes.txt''
  1. default
  2. sakabug
@@ -242,7 +242,7 @@ Theme 'default' exists in '/Users/ljp/.ltspice_themes/themes.ltt'
 To see the complete configuration file (and not only the color settings) use the "```-p```" (=print) that will dump the applications full property list file to stdout as in
 
 ```
-$> themeltspice -p
+$> themeltspice.sh -p
 '/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist' content:{
   "AllowShortedCompPins" => 0
   "AutoDotRawDeletion" => 1
