@@ -297,7 +297,7 @@ Copy of the **LTSpice** application plist file at the time of first run
 - [```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist```]  
 **LTSpice* application plist file
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 # Theme file format
 
@@ -368,27 +368,29 @@ digits    ::= "0" | "1" | ...
 
 &nbsp;
 
+<div style="page-break-after: always;"></div>
+
 # Theme reference screenshots
 
 |[back to content table](#content)|
 
-## default
+## 1. default
 
 ![default theme](theme_screenshots/default.png)
 
-## darcula
+## 2. darcula
 
 ![darcult theme](theme_screenshots/darcula.png)
 
-## sakabug
+## 3. sakabug
 
 ![sakabug theme](theme_screenshots/sakabug.png)
 
-## twilght-after-dark
+## 4. twilght-after-dark
 
 ![twilght-after-dark theme](theme_screenshots/twilght-after-dark.png)
 
-## softdark
+## 5. softdark
 
 ![softdark theme](theme_screenshots/softdark.png)
 
