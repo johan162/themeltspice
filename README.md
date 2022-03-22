@@ -3,6 +3,31 @@
 
 &nbsp;
 
+# Quckstart TL;DR
+
+## Installing
+
+1. Copy "```themeltspice.sh```" to a directory of your choice, change to that directory
+2. Create the directory "```~/.ltspice_themes/```"
+3. Copy "```themes.ltt```" to "```~/.ltspice_themes/```"
+
+## Use a theme
+
+To set the theme to, say '```darcula```' just run:  
+```
+$ ./themeltspice.sh darcula
+```
+
+To list available themes
+```
+$ ./themeltspice.sh -l
+```
+You can see [examples of all available themes]((#theme-reference-screenshots)) as well. 
+
+That is all there is to it for the most basic uses. Read on if you want to know more!
+
+&nbsp;
+
 # Content
 
 - [Introduction](#introduction)
