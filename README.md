@@ -1,7 +1,18 @@
 # README 'themeltspice.sh'
 > A color theme handler for the OSX version of the circuit simulator LTSpice.
 
-## Introduction
+## Content
+
+- Introduction
+- Installation
+- Usage
+- How the script worls
+- Theme file format
+- Theme reference screenshots
+
+&nbsp;
+
+# Introduction
 
 This is not meant to be an introduction to either the usage or function of 
 the electric circuit simulator **LTSpice** for neither OSX nor Windows. 
@@ -317,4 +328,27 @@ digits    ::= "0" | "1" | ...
  ```
 ***Fig 2: The simplified BNF grammar for the themes file format***
 
+&nbsp;
+
+# Theme reference screenshots
+
+## default
+
+![default theme](theme_screenshots/default.png)
+
+## darcula
+
+![darcult theme](theme_screenshots/darcula.png)
+
+## sakabug
+
+![sakabug theme](theme_screenshots/sakabug.png)
+
+## twilght-after-dark
+
+![twilght-after-dark theme](theme_screenshots/twilght-after-dark.png)
+
+## softdark
+
+![softdark theme](theme_screenshots/softdark.png)
 
