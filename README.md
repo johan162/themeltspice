@@ -15,6 +15,7 @@
 &nbsp;
 
 # Introduction
+|[back to content table](#content)|
 
 This is not meant to be an introduction to either the usage or function of 
 the electric circuit simulator **LTSpice** for neither OSX nor Windows. 
@@ -76,6 +77,8 @@ The inspiration for this work comes from the [Windows **LTSpice** theme manager]
 
 # Installation
 
+|[back to content table](#content)|
+
 There is no installation program for this since it is only one executable script file and you are free to place that file anywhere at your conveniance. 
 
 To use the script either copy the script (```themeltspice.sh```) to some standard location for scripts as per your ```PATH``` variable or create a new directory and copy the file there and run it from this directory.
@@ -104,6 +107,8 @@ Later on if you find themes you like somewhere else just open the theme file and
 &nbsp;
 
 # Usage
+
+|[back to content table](#content)|
 
 ```
 Set or create a named color theme for LTSpice
@@ -227,6 +232,8 @@ $> _
 
 # How the script works
 
+|[back to content table](#content)|
+
 The configuration file where the **LTSpice** configurations are stored
 is a binary configuration file and cannot be directly manipulated. The format
 used is a standard OSX *"Property List"* (plist) and as such OSX provides a
@@ -266,6 +273,8 @@ Copy of the **LTSpice** application plist file at the time of first run
 &nbsp;
 
 # Theme file format
+
+|[back to content table](#content)|
 
 For each theme a total of 34 color parameters are stored as listed in figure 1 below. 
 
@@ -333,6 +342,8 @@ digits    ::= "0" | "1" | ...
 &nbsp;
 
 # Theme reference screenshots
+
+|[back to content table](#content)|
 
 ## default
 
