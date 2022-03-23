@@ -7,23 +7,14 @@
 
 ## Installing
 
-1. Copy "```themeltspice.sh```" to a directory of your choice, change to that directory
-2. Create the directory "```~/.ltspice_themes/```"
-3. Copy "```themes.ltt```" to "```~/.ltspice_themes/```"
+1. Copy "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH), change to that directory.
+2. To list and see available themes run 
+```$ ./themeltspice.sh -l```
+2. To set the theme to, say '```darcula```', run:  
+```$ ./themeltspice.sh darcula```
 
-## Use a theme
 
-To set the theme to, say '```darcula```' just run:  
-```
-$ ./themeltspice.sh darcula
-```
-
-Now start **LTSpice** and you will see that the color palette has changed.
-
-To list available themes
-```
-$ ./themeltspice.sh -l
-```
+Now start **LTSpice** and you will see that the color palette has changed.  
 You can see [examples of all available themes]((#theme-reference-screenshots)) as well. 
 
 That is all there is to it for the most basic uses. Read on if you want to know more!
@@ -53,7 +44,7 @@ on a Windows Machine. Instead see
 [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt) 
 if you are looking for a Windows theme manager.
 
-This script is used to create and set a color theme for the OSX version of LTSpice. 
+This script is used to create and set a color theme for the OSX version of **LTSpice**. 
 The themes are stored as a plain text file in an human readable and pretty obvious format 
 (see the BNF grammar at the end of this README file).
 
@@ -98,7 +89,7 @@ and it might very well be a good idea. But having written bash scripts for a lon
 
 **Related work**
 
-The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the OSX world. This state of affairs cannot stand! 
+The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the OSX world. That state of affairs cannot stand! 
 
 &nbsp;
 
