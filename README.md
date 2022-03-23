@@ -1,25 +1,22 @@
 # README 'themeltspice.sh'
-> A color theme handler for the OSX version of **LTSpice** circuit simulator.
+> **WHAT IS THIS?** ```'themeltspice.sh'``` is a color theme manager for the **OSX** version of [LTSpice electric circuit simulator](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) which is a version of the classical SPICE (Simulation Program with Integrated Circuit Emphasis) simulator.  
+[LTSpice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) is made freely available by [Analog Devices](https://www.analog.com).
 
 &nbsp;
 
-# Quckstart TL;DR
+# Quckstart &lt;TL;DR>
 
-## Installing
 
-1. Copy "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH), change to that directory.
-2. To list and see available themes run 
+1. Copy the file "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH). Change to that directory.
+2. To list all available themes run:  
 ```$ ./themeltspice.sh -l```
-2. To set the theme to, say '```darcula```', run:  
+2. To set a new theme, say '```darcula```', run:  
 ```$ ./themeltspice.sh darcula```
 
+When you now run **LTSpice** you will see that the color palette has changed. You can see [examples of all available themes](#theme-reference-screenshots) as well. 
 
-Now start **LTSpice** and you will see that the color palette has changed.  
-You can see [examples of all available themes]((#theme-reference-screenshots)) as well. 
+That is all there is to it for the most basic use case. Read on if you want to know more!
 
-That is all there is to it for the most basic uses. Read on if you want to know more!
-
-&nbsp;
 
 # Content
 
@@ -30,68 +27,69 @@ That is all there is to it for the most basic uses. Read on if you want to know 
 - [Theme file format](#theme-file-format)
 - [Theme reference screenshots](#theme-reference-screenshots)
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 # Introduction
 |[back to content table](#content)|
 
 This is not meant to be an introduction to either the usage or function of 
-the electric circuit simulator **LTSpice** for neither OSX nor Windows. 
-It is instead assumed you have basic knowledge of the OSX version of this simulator.
+the electric circuit simulator **LTSpice**. 
+It is therefore assumed you have installed and have basic knowledge of the **OSX** version of **LTSpice**.
 
-**Note:** This theme manager is unique to OSX and will not in any shape or form work 
-on a Windows Machine. Instead see 
+**Note:** This theme manager is unique to **OSX** and will not in any shape or form work 
+on a then Window version of **LTSpice**. Instead see 
 [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt) 
-if you are looking for a Windows theme manager.
+if you are looking for a Windows based **LTSpice** theme manager.
 
-This script is used to create and set a color theme for the OSX version of **LTSpice**. 
-The themes are stored as a plain text file in an human readable and pretty obvious format 
-(see the BNF grammar at the end of this README file).
+This script is used to create and set a color theme for the **OSX** version of **LTSpice**. 
+The themes are stored as a plain text file in an human readable format 
+(see the [BNF grammar](#theme-file-format) at the end of this README file).
 
 While **LTSpice** does not inherently support any concept of a color theme the color settings
-are stored in an OSX standard plist configuration file that can be updated outside
-the **LTSpice** program.
+are stored in an **OSX** standard property list (plist) configuration file that can be updated outside the **LTSpice** program. To avoid race conditions the **LTSpice** application needs to be closed when a theme change is made. This is checked by this script and if a running process is found an error message will be shown and the script terminates.
 
-&nbsp;
 
-**A note on the OSX version of LTSpice:** 
+**A note on the **OSX** version of LTSpice:** 
 
 While much or all of the core funtionality of the simulator are exctly the same
-between the OSX and Windows versions the UI is dramatically different. In fact,
-many OSX users are so stumped by the apparent frugality of the OSX UI that they
-end up using the Windows version even on OSX by running it under Wine. 
-This is a mistake (and quite slow and clonky)
+between the **OSX** and Window version the UI is dramatically different. In fact,
+many **OSX** users are so stumped by the apparent frugality of the **OSX** UI that they
+end up using the Windows version even on **OSX** by running it under Wine. 
+This is a mistake (but perhaps understandable if only barely)
 
-While the OSX version does not adhere to the ususal design guidelines for OSX programs
-and requires some "getting used to" 
-it is a highly functional UI for its purpose. After the initial "getting-used-to" experience more than a few users claim that the OSX version is superior for professionals 
-or even serious amateurs compared to the windows version. This is mainly to do with 
+While the **OSX** version does not adhere to the ususal design guidelines for **OSX** programs
+and requires some "getting used to" it is a highly functional UI for its purpose. After the initial "getting-used-to" experience many users will hopefully realize that the **OSX** version is superior for professionals 
+(or even serious amateurs) compared to the window version. This is mainly to do with 
 the abondonment of menus that distract the user and forces eye-focus to shift.
 
-Both the advantage and the drawback of the OSX UI is that it heavily relies on the user 
-getting familiar and learning around 8 or 9 keystrokes. Once those keystrokes are
-mastered it is usually substantially faster to create a diagram and setup a simulation
-in the native OSX version than the Windows dito.
+Both the advantage and the drawback of the **OSX** UI is that it heavily relies on 1) the user 
+getting familiar and learning a few important shortcut keys and 2) becoming familiar with context sensitive menus. 
 
-&nbsp; 
+Once those keystrokes are
+mastered it is usually substantially faster to create a circuit diagram and setup a simulation
+in the native **OSX** version than the Windows dito. The **OSX** version also have context sensitive menu (trackpad "right-click") in most places.
+
+To be fair. The **OSX** version does have some missing functionality but nothing really serious for pro or semi-pro usage. The main *functional* differences are:
+
+1. No dialogue help to enter ```.meas``` simulation command. 
+2. No keyboard shortcut editor
+3. Not possible to edit ```.op``` operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an ```.op``` label..
+ 
 
 **Why do this as a bash shell script?**
 
 Why oh why was this done as a bash shell script I can hear people cry out. 
 Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, bash is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
-I did not want to run into "module-hell" of Python. Instead I claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all the features availaable that are not commonly known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language.
-If you envision a program with more than around 600-800 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ship with OSX (v3.2.57). A lot has happened since that was release well over a decade ago.
+Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
+If you envision a program with more than around 600-800 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
 
-So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` 
-and it might very well be a good idea. But having written bash scripts for a long (long) time it was simply quicker than working around some particulars that differs in zsh that I'm not totally up to speed on.
-
-&nbsp;
+So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` (since ```zsh``` even has a "bash" compatibilty mode) and it might very well be a good idea. 
 
 **Related work**
 
-The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the OSX world. That state of affairs cannot stand! 
+The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the **OSX** world. That state of affairs cannot stand and has now been corrected!
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 # Installation
 
@@ -101,28 +99,35 @@ There is no installation program for this since it is only one executable script
 
 To use the script either copy the script (```themeltspice.sh```) to some standard location for scripts as per your ```PATH``` variable or create a new directory and copy the file there and run it from this directory.
 
-The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with the **LTSpice** "default" theme will be created.
+The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with five themes will be automatcally installed.
 
-In the distribution there is a default theme file "```themes.ltt```". The file-extension can be read as "**LT**Spice **T**hemes". By using the "-f" option you can also specify another file location to be used a theme file. This default file contains (as of this writing) these 5 themes:
+The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "-f" option you can also specify another file location to be used a theme file. 
+
+This default theme file installed (as of this writing) contain these 5 themes:
 
 1. default (LTSpice default)
 2. sakabug
 3. twilight-after-dawn
 4. dracula
 5. softdark
+6. blackwhite
 
-Themes no 2-4 are taken from the Windows cousin of theme manager (See related work above), "softdark" is a dfferent theme I personally like to use. If you want to use this theme file just copy it manully to the "```~/.ltspice_themes```" directory.
+Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. 
 
 Later on if you find themes you like somewhere else just open the theme file and copy them at the end with one blank line between the new theme and the last existing theme.
 
-> **WARNING!** The format of the OSX and Windows version of the theme files are not compatible since the developer of **LTSpice** have used different names for the control fields in the Windows and the OSX version.
+You can easily check if the new theme have been added correctly by listing the theme with the command:
+
+    $> themeltspice.sh -l
+
+> **WARNING!** The format of the **OSX** and Windows version of the theme files are not compatible since the developer of **LTSpice** have used different names for the control fields in the Windows and the **OSX** version.
 
 ## Known Limitations
 
 - It is not (yet) possible to remove or overwrite an existing theme. For that you have to first manually delete the theme you want to overwrite in the themes file.
-- Windows theme files are not compatible with OSX and vice versa. *C'est la vie!*
+- Windows theme files are not compatible with **OSX** and vice versa. *C'est la vie!*
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 # Usage
 
@@ -154,13 +159,13 @@ In addition to these major use cases there are some supporting function that are
 
 &nbsp;
 
-> Note: A copy fo the original **LTSpice** plist configuration file is also stored in the theme directory with the extension ```*.ORIGINAL```. In case (for some reason) the configuration file gest corrupt you can always restore a clean backup.
+> Note: A copy fo the original **LTSpice** plist configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case (for some reason) the configuration file gest corrupt you can always restore a clean backup.
 
 &nbsp;
 
-## Setting a new theme
+## Setting a new theme for LTSpice
 
-If we assume you have installed the script somewhere in your path and copied the distrbuted theme file "```themes.ltt```" to the theme directory (see Installation section above) you can now set the ```softdark```theme as so
+If we assume you have installed the script somewhere in your path (see [Installation](#installation) section above) you can now set the '```softdark```' theme as so:
 
 ```
 $> themeltspice.sh softdark
@@ -168,7 +173,7 @@ Successfully updated new theme to 'softdark'
 $> _
 ``` 
 
-This will update the current **LTSpice** configuration file with this color schema. To restore back to the default schema just do
+This will update the current **LTSpice** configuration file with this color schema. If you now start **LTSpice** you will see the effect of this theme switch. To restore back to the default schema just do:
 
 ```
 $> themeltspice.sh default
@@ -176,11 +181,11 @@ Successfully updated new theme to 'default'
 $> _
 ``` 
 
-and there is nothing more to it. The settings are done in an atomic way so a change go through totally successfull or not at all. This way you cannot end up with a half-updated configuration file.
+and there is nothing more to it. The settings are done in an atomic way so a change go through  successfull or not at all. This way you cannot end up with a half-updated configuration file.
 
 &nbsp;
 
-> Atomic update: The way this is done is by first copying the config file to a temporary directory, do the changes, run a integrity verification on the config file and then copy it back to the application location (i.e. ```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist)```)
+> **Atomic update:** The way this is done is by first copying the config file to a temporary directory, do the changes, run a integrity verification on the config file and then copy it back to the application location (i.e. ```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist)```)
 
 &nbsp;
 
@@ -198,7 +203,7 @@ This will store the new theme at the end of the existing theme file. If a theme 
 
 ## Listing all themes available
 
-To see a list of all themes defined use the "```-l```" option as
+To see a list of all themes defined use the "```-l```" option as so:
 
 ```
 $> themeltspice.sh -l 
@@ -224,7 +229,7 @@ or
 
 ```
 $> themeltspice.sh -l default
-Theme 'default' exists in '/Users/ljp/.ltspice_themes/themes.ltt'
+Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
 ```
 
 
@@ -246,7 +251,8 @@ $> themeltspice.sh -p
 }
 $> _
 ```
-&nbsp;
+
+<div style="page-break-after: always;"></div>
 
 # How the script works
 
@@ -254,11 +260,11 @@ $> _
 
 The configuration file where the **LTSpice** configurations are stored
 is a binary configuration file and cannot be directly manipulated. The format
-used is a standard OSX *"Property List"* (plist) and as such OSX provides a
+used is a standard **OSX** *"Property List"* (plist) and as such **OSX** provides a
 command line tool that can be used to manipuate the individual fields in that
 property file.
 
-The OSX utility is called '```plutil```' and is used to read and manipulate individual 
+The **OSX** utility is called '```plutil```' and is used to read and manipulate individual 
 fields in this configuration file. See ```man plutil``` for more details.
 
 By default the plist configuration file of **LTSpice** is stored at:
@@ -273,8 +279,8 @@ As an extra precaution the first time the script is run it creates a backup copy
 configuration file and stores it in the theme directory with the added suffix 
 "```.ORIGINAL```".
 
-Since OSX caches all plist files it is not enough to just update the property file
-on its own, one must also force a refresh of the propert cash using "```defalt read <PLIST-FILE>```" command. 
+Since **OSX** caches all plist files it is not enough to just update the property file
+on its own, one must also force a refresh of the property cash using "```default read <PLIST-FILE>```" command. 
 
 
 ## Directories and files used
@@ -283,10 +289,10 @@ on its own, one must also force a refresh of the propert cash using "```defalt r
 The default location of themes
 
 - [```/User/<USER>/.ltspice_themes/com.analog.LTspice.App.plist.ORIGINAL```]  
-Copy of the **LTSpice** application plist file at the time of first run 
+Copy of the **LTSpice** application plist file at the time of first run of this script
 
 - [```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist```]  
-**LTSpice* application plist file
+**LTSpice** application plist file
 
 <div style="page-break-after: always;"></div>
 
@@ -296,13 +302,13 @@ Copy of the **LTSpice** application plist file at the time of first run
 
 For each theme a total of 34 color parameters are stored as listed in figure 1 below. 
 
-> **Difference between OSX the Windows version theme format:**  
-Unfortunately there are three minor differences between the Windows version and OSX version theme files in that some fields have different names in the two versions.  
+> **Difference between **OSX** the Windows version theme format:**  
+Unfortunately there are three minor differences between the Windows version and **OSX** version theme files in that some fields have different names in the two versions.  
 There are three major differences:  
 --OSX uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
 --OSX uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".  
---The window version have a "```SchematicColor13```" which doesn't exist in the OSX version.  
-For this reason it is not possible to copy theme directly between the Windows and OSX without som manual fixes. 
+--The window version have a "```SchematicColor13```" which doesn't exist in the **OSX** version.  
+For this reason it is not possible to copy theme directly between the Windows and **OSX** without som manual fixes. 
 
 
 ```
@@ -344,7 +350,7 @@ NetlistEditorColor4)
 ***Fig 1: The fields stored as a color theme***
 
 ## BNF Grammar
-The BNF grammar for the theme file is extremely simple as shown in Figure 1 below
+The BNF grammar for the theme file is extremely simple and is shown in Figure 2. below
 
 ```
 themes    ::= theme | theme <EMPTY_LINE> themes
@@ -365,23 +371,32 @@ digits    ::= "0" | "1" | ...
 
 |[back to content table](#content)|
 
-## 1. default
+## 1. Theme: "default"
 
 ![default theme](theme_screenshots/default.png)
 
-## 2. darcula
+<div style="page-break-after: always;"></div>
+
+## 2. Theme: "darcula"
 
 ![darcult theme](theme_screenshots/darcula.png)
 
-## 3. sakabug
+## 3. Theme: "sakabug"
 
 ![sakabug theme](theme_screenshots/sakabug.png)
 
-## 4. twilght-after-dark
+<div style="page-break-after: always;"></div>
+
+## 4. Theme: "twilght-after-dark"
 
 ![twilght-after-dark theme](theme_screenshots/twilght-after-dark.png)
 
-## 5. softdark
+## 5. Theme: "softdark"
 
 ![softdark theme](theme_screenshots/softdark.png)
 
+<div style="page-break-after: always;"></div>
+
+## 6. Theme: "blackwhite"
+
+![blackwhite theme](theme_screenshots/blackwhite.png)
