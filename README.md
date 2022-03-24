@@ -373,30 +373,30 @@ digits    ::= "0" | "1" | ...
 
 ## 1. Theme: "default"
 
-![default theme](theme_screenshots/default.png)
+![default theme](screenshots/default.png)
 
 <div style="page-break-after: always;"></div>
 
 ## 2. Theme: "darcula"
 
-![darcult theme](theme_screenshots/darcula.png)
+![darcult theme](screenshots/darcula.png)
 
 ## 3. Theme: "sakabug"
 
-![sakabug theme](theme_screenshots/sakabug.png)
+![sakabug theme](screenshots/sakabug.png)
 
 <div style="page-break-after: always;"></div>
 
 ## 4. Theme: "twilght-after-dark"
 
-![twilght-after-dark theme](theme_screenshots/twilght-after-dark.png)
+![twilght-after-dark theme](screenshots/twilght-after-dark.png)
 
 ## 5. Theme: "softdark"
 
-![softdark theme](theme_screenshots/softdark.png)
+![softdark theme](screenshots/softdark.png)
 
 <div style="page-break-after: always;"></div>
 
 ## 6. Theme: "blackwhite"
 
-![blackwhite theme](theme_screenshots/blackwhite.png)
+![blackwhite theme](screenshots/blackwhite.png)
