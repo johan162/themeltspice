@@ -38,7 +38,7 @@ init_theme_dir() {
     if [[ ! -f ${ltspice_theme_file} ]]; then
         # Initialize the theme file with the default LTSpice theme
         # Use the following command to create the coded version of theme file
-        # cat themes.ltt| bzip2 |base64 -b60 -o themes.bz2.b64
+        # cat themes.ltt| bzip2 |base64 -b60 | pbcopy
         cat <<NEWHEMEFILE  | base64 -d | bzcat > ${ltspice_theme_file}
 QlpoOTFBWSZTWQ9dhk4ABKnfgAAQQAP/8iqhCIo/79/AUAT4rIoqpaTGe7wQ
 kiExMmqNGhkDQA9RoAyGghKgNNANAAAAkIQhSNQZAAAAAIqImJtU0/TVNlNA
