@@ -36,9 +36,10 @@ init_theme_dir() {
     fi
 
     if [[ ! -f ${ltspice_theme_file} ]]; then
-        # Initialize the theme file with the default LTSpice theme
-        # Use the following command to create the coded version of theme file
-        # cat themes.ltt| bzip2 |base64 -b60 | pbcopy
+        # Initialize the theme file with the default LTSpice theme.
+        # Use the following command to get the encoded version into the paste buffer
+        # when theme is updated. Then do a CMD-V to past into this file.
+        # cat themes.ltt|bzip2|base64 -b60|pbcopy
         cat <<NEWHEMEFILE  | base64 -d | bzcat > ${ltspice_theme_file}
 QlpoOTFBWSZTWQ9dhk4ABKnfgAAQQAP/8iqhCIo/79/AUAT4rIoqpaTGe7wQ
 kiExMmqNGhkDQA9RoAyGghKgNNANAAAAkIQhSNQZAAAAAIqImJtU0/TVNlNA
@@ -195,7 +196,7 @@ update_theme() {
             errlog "Could not copy '${copied_ltspice_file}' to '${ltspice_plist_file}'."
             exit 1
         fi
-        printf "Successfully updated new theme to '%s'\n" ${theme_name}
+        infolog "Successfully updated new theme to '%s'\n" ${theme_name}
     else
         errlog "Could not update theme, no changes made."
         exit 1
@@ -229,7 +230,7 @@ list_themes() {
     do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
             if [[ ${check_name} -eq 0 ]]; then
-                printf "%2d. %s\n" $n ${BASH_REMATCH[1]}
+                infolog "%2d. %s\n" $n ${BASH_REMATCH[1]}
             else
                 if [[ ${BASH_REMATCH[1]} == $2 ]]; then
                     return 1
@@ -266,7 +267,7 @@ copy_ltspice_plist() {
 
 # Dump the entire contet of the LTSpice configuration file in human readable format
 print_ltspice_plist() {
-    [[ ! -f ${ltspice_plist_file} ]] && printf "$red*** ERROR *** LTSpice plist file not found at '%s'!\n" "${ltspice_plist_file}" && exit 1
+    [[ ! -f ${ltspice_plist_file} ]] && errlog "LTSpice plist file not found at '%s'." "${ltspice_plist_file}" && exit 1
     infolog "'${ltspice_plist_file}' content: "
     plutil -p ${ltspice_plist_file}
 }
