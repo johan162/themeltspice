@@ -37,7 +37,7 @@ the electric circuit simulator **LTSpice**.
 It is therefore assumed you have installed and have basic knowledge of the **OSX** version of **LTSpice**.
 
 **Note:** This theme manager is unique to **OSX** and will not in any shape or form work 
-on a then Window version of **LTSpice**. Instead see 
+on a the Window version of **LTSpice**. Instead see 
 [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt) 
 if you are looking for a Windows based **LTSpice** theme manager.
 
@@ -55,7 +55,7 @@ While much or all of the core funtionality of the simulator are exctly the same
 between the **OSX** and Window version the UI is dramatically different. In fact,
 many **OSX** users are so stumped by the apparent frugality of the **OSX** UI that they
 end up using the Windows version even on **OSX** by running it under Wine. 
-This is a mistake (but perhaps understandable if only barely)
+This is a mistake (but perhaps understandable if only barely).
 
 While the **OSX** version does not adhere to the ususal design guidelines for **OSX** programs
 and requires some "getting used to" it is a highly functional UI for its purpose. After the initial "getting-used-to" experience many users will hopefully realize that the **OSX** version is superior for professionals 
@@ -73,7 +73,7 @@ To be fair. The **OSX** version does have some missing functionality but nothing
 
 1. No dialogue help to enter ```.meas``` simulation command. 
 2. No keyboard shortcut editor
-3. Not possible to edit ```.op``` operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an ```.op``` label..
+3. Not possible to edit ```.op``` operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an ```.op``` label.
  
 
 **Why do this as a bash shell script?**
@@ -83,7 +83,7 @@ Couldn't it be written in [select favourite language] (e.g. Python). Of course i
 Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
 If you envision a program with more than around 600-800 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
 
-So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` (since ```zsh``` even has a "bash" compatibilty mode) and it might very well be a good idea. 
+So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` (since ```zsh``` even has a "bash" compatibilty mode) and it might very well be a good idea to pursuite.
 
 **Related work**
 
@@ -99,11 +99,11 @@ There is no installation program for this since it is only one executable script
 
 To use the script either copy the script (```themeltspice.sh```) to some standard location for scripts as per your ```PATH``` variable or create a new directory and copy the file there and run it from this directory.
 
-The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with five themes will be automatcally installed.
+The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with six themes will be automatcally installed.
 
-The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "-f" option you can also specify another file location to be used a theme file. 
+The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "```-f```" option you can also specify another file location to be used a theme file. 
 
-This default theme file installed (as of this writing) contain these 5 themes:
+This default theme file installed (as of this writing) contain these six themes:
 
 1. default (LTSpice default)
 2. sakabug
@@ -112,7 +112,7 @@ This default theme file installed (as of this writing) contain these 5 themes:
 5. softdark
 6. blackwhite
 
-Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. 
+Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
 
 Later on if you find themes you like somewhere else just open the theme file and copy them at the end with one blank line between the new theme and the last existing theme.
 
@@ -159,7 +159,7 @@ In addition to these major use cases there are some supporting function that are
 
 &nbsp;
 
-> Note: A copy fo the original **LTSpice** plist configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case (for some reason) the configuration file gest corrupt you can always restore a clean backup.
+> **Note:** A copy fo the original **LTSpice** plist configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case (for some reason) the configuration file gest corrupt you can always restore a clean backup.
 
 &nbsp;
 
@@ -201,6 +201,14 @@ $> _
 
 This will store the new theme at the end of the existing theme file. If a theme with this name already exsts an error message will be printed informing about this.
 
+&nbsp;
+
+> **WARNING:** You might have to quit and start **LTSpice** twice to force the update of the plist file from the plist cache before running the dump command.  
+You might want to check that changes have been made by printing out the property list using the command:  
+```$ themeltspice.sh -p```" (See [Printing all settings](#printing-all-settings-stored-in-the-config-file))
+
+&nbsp;
+
 ## Listing all themes available
 
 To see a list of all themes defined use the "```-l```" option as so:
@@ -213,6 +221,7 @@ Listing themes in '/Users/<USER>/.ltspice_themes/themes.txt''
  3. twilight-after-dawn
  4. dracula
  5. softdark
+ 6. blackwhite
 $> _
 ```
 
@@ -235,7 +244,7 @@ Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
 
 ## Printing all settings stored in the config file
 
-To see the complete configuration file (and not only the color settings) use the "```-p```" (=print) that will dump the applications full property list file to stdout as in
+To see the complete configuration file (and not only the color settings) use the "```-p```" (=print) that will dump **LTSpice** full property list file to stdout as in:
 
 ```
 $> themeltspice.sh -p
