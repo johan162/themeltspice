@@ -36,8 +36,7 @@ copied_plist_file=/tmp/com.analog.LTspice.App.plist
 # Print error messages in red
 red="\033[31m"
 default="\033[39m"
-quiet=0
-verbose=0
+
 
 # Format error message
 errlog() {
@@ -46,9 +45,10 @@ errlog() {
     printf "$default\n"
 }
 
+
 # Format info message
 infolog() {
-    [[ ${quiet} -eq 0 ]] && printf "$@"
+    [[ ${quiet_flag} -eq 0 ]] && printf "$@"
 }
 
 
@@ -92,6 +92,7 @@ NEWHEMEFILE
     echo "" >> ${ltspice_theme_file}
     fi
 }
+
 
 # Dump the current configuration in the plist file as new named theme
 # Arg 1: theme name
@@ -164,6 +165,23 @@ dump_current_theme() {
 
 }
 
+# Ask user a Y/N question
+# Arg1: Prompt string
+# Set exit code 1=YES, 0=NO
+ask_yn() {
+    [[ ${yes_flag} -eq 1 ]] && return 1
+
+    printf "$@\n"
+    select yn in "Yes" "No"; do
+        echo $yn
+        case $yn in
+            Yes ) return 1 ;;
+            No ) return 0 ;;
+        esac
+    done
+}
+
+
 # Delete named theme
 # Arg1: Theme file
 # Arg2: Theme name
@@ -223,24 +241,31 @@ delete_theme() {
     # If the line just above the theme name is a text and not a blank line
     # then we also delete that line (which is a theme comment)
     [[ ! -z ${prevline} ]] && start_lineno=$((start_lineno-1))
+
     # Delete blank line after the theme. We are guaranteed that the line is blank
     # since finding a blank line is the only way to break out of the loop without
     # it being a detected error
     end_lineno=$((end_lineno+1)) 
 
-    if [[ ${verbose} -eq 1 ]]; then
+    if [[ ${verbose_flag} -eq 1 ]]; then
         infolog "Deleting line range [${start_lineno},${end_lineno}] in '${theme_file}'.\n\n"
         sed -n "${start_lineno},${end_lineno}p" ${theme_file} 
     fi
 
-    sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file} 
-
-    if [[ $? -eq 0 ]]; then
-        infolog "Theme '%s' deleted from '%s'.\n" "${theme_name}" "${theme_file}"
+    ask_yn "Are you sure you wish to delete theme '${theme_name}' in '${theme_file}'?"
+    if [[ $? -eq 1 ]]; then
+        sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file} 
+        if [[ $? -eq 0 ]]; then
+            infolog "Theme '%s' deleted from '%s'.\n" "${theme_name}" "${theme_file}"
+            exit 0
+        else
+            errlog "Could NOT delete theme '%s' from '%s'.\n" "${theme_name}" "${theme_file}"
+            exit 1
+        fi        
     else
-        errlog "Could NOT delete theme '%s' from '%s'.\n" "${theme_name}" "${theme_file}"
-    fi
-
+         infolog "${red}Theme '${theme_name}' NOT deleted.${default}\n"
+         exit 0
+    fi 
 }
 
 
@@ -386,9 +411,10 @@ usage() {
     echo "-h          : Print help and exit"
     echo "-l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists"
     echo "-p          : List content in LTSpice plist file"
-    echo "-q          : Quiet no status output"
-    echo "-v          : Verbose status output"
+    echo "-q          : quiet_flag no status output"
+    echo "-v          : verbose_flag status output"
     echo "-x <NAME>   : Delete theme NAME from themes file"
+    echo "-y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)"
 }
 
 #
@@ -398,45 +424,51 @@ declare -i OPTIND=0
 declare -i dump_flag=0
 declare -i list_flag=0
 declare -i delete_flag=0
+declare -i yes_flag=0
+declare -i quiet_flag=0
+declare -i verbose_flag=0
 
 while [[ $OPTIND -le "$#" ]]; do
-  if getopts f:pdlhqvx option; then
-    case $option in
-    f)
-      ltspice_theme_file="${OPTARG}"
-      ;;
-    l)
-      list_flag=1
-      ;;
-    d)
-      dump_flag=1
-      ;;
-    h)
-      usage "$(basename $0)"
-      exit 0
-      ;;
-    p)
-      print_ltspice_plist
-      exit 0
-      ;;
-    q)
-      quiet=1
-      ;;
-    x)
-      delete_flag=1
-      ;;
-    v)
-      verbose=1
-      ;;
-    [?])
-      usage "$(basename $0)"
-      exit 1
-      ;;
-    esac
-  elif [[ $OPTIND -le "$#" ]]; then
-      theme_name+="${!OPTIND}"
-      ((OPTIND++))
-  fi
+    if getopts f:pdlhqvxy option; then
+        case $option in
+            f)
+                ltspice_theme_file="${OPTARG}"
+                ;;
+            l)
+                list_flag=1
+                ;;
+            d)
+                dump_flag=1
+                ;;
+            h)
+                usage "$(basename $0)"
+                exit 0
+                ;;
+            p)
+                print_ltspice_plist
+                exit 0
+                ;;
+            q)
+                quiet_flag=1
+                ;;
+            x)
+                delete_flag=1
+                ;;
+            v)
+                verbose_flag=1
+                ;;
+            y)
+                yes_flag=1
+                ;;
+            [?])
+                usage "$(basename $0)"
+                exit 1
+                ;;
+        esac
+    elif [[ $OPTIND -le "$#" ]]; then
+        theme_name+="${!OPTIND}"
+        ((OPTIND++))
+    fi
 done
 
 check_running_ltspice

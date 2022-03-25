@@ -146,6 +146,7 @@ Usage:
 -q          : Quiet no status output
 -v          : Verbose status output
 -x <NAME>   : Delete theme NAME from themes file
+-y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)
 ```
 
 There are two major use cases:
@@ -272,13 +273,24 @@ To delete a theme use the '```-x```' option. For example, to delete the theme '`
 
 ```
 $> themeltspice.sh -x softdark
+Are you sure you wish to delete theme 'softdark' in '/Users/ljp/.ltspice_themes/themes.ltt'?
+1) Yes
+2) No
+#? 1
+Theme 'default' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
+$> _
+```
+As a safety precaution the deletion of a theme have to be confirmed by an interactive question. To avoid this question and delete directly (perhaps in a script) add the '```-y```' option as so:
+
+```
+$> themeltspice.sh -xy softdark
 Theme 'default' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
 $> _
 ```
 
-A one-level backup file is created with the name '```themes.ltt.BAK```' in the theme directory.
+A one-level backup file is always created with the name '```themes.ltt.BAK```' in the themes directory.
 
-By combining the '```-x```' option with '```-v```' option (verbose) the script will also print out the theme being deleted.
+By combining the '```-x```' option with '```-v```' option (verbose) the script will also print out the theme before being deleted.
 
 > **Note:** if you want to update (write over) an existing theme you must first delete it. This is done on purpose to avoid unintentional data loss.
 
@@ -377,6 +389,7 @@ NetlistEditorColor2
 NetlistEditorColor3
 NetlistEditorColor4)
 ```
+
 ***Fig 1: The fields stored as a color theme***
 
 ## BNF Grammar
