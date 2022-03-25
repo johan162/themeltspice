@@ -2,11 +2,11 @@
 #=======================================================================
 # Name: themeltspice.sh
 # Description: Set and create the color theme for OSX version of LTSpice
-# Author: <johan162@gmail.com>
+# Author: Jphan Persson <johan162@gmail.com>
 #
 # MIT License
 #
-# Copyright (c) 2022 <johan162@gmail.com>
+# Copyright (c) 2022 Johan Persson <johan162@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #=======================================================================
+
+# Warn about unbound variable usage
+set -u
 
 # Default locations for theme and configuration files
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
@@ -417,6 +420,7 @@ declare -i delete_flag=0
 declare -i yes_flag=0
 declare -i quiet_flag=0
 declare -i verbose_flag=0
+declare theme_name
 
 while [[ $OPTIND -le "$#" ]]; do
     if getopts f:pdlhqvxy option; then
