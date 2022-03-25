@@ -142,7 +142,7 @@ Usage:
 -h          : Print help and exit
 -l [<NAME>] : List themes in default or named theme file or íf <NAME> 
               is specified check if <NAME> theme exists
--p          : List content in **LTSpice** plist file
+-p          : List content in LTSpice plist file
 -q          : Quiet no status output
 -v          : Verbose status output
 -x <NAME>   : Delete theme NAME from themes file
