@@ -124,8 +124,8 @@ You can easily check if the new theme have been added correctly by listing the t
 
 ## Known Limitations
 
-- It is not (yet) possible to remove or overwrite an existing theme. For that you have to first manually delete the theme you want to overwrite in the themes file.
-- Windows theme files are not compatible with **OSX** and vice versa. *C'est la vie!*
+- Windows theme files are not compatible with **OSX** and vice versa. *C'est la vie!*  
+*(However, it is not terrible hard to manually fix those few differences and then copy a theme definition as hinted in the section "[Theme file format](#theme-file-format)")*
 
 <div style="page-break-after: always;"></div>
 
