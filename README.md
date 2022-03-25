@@ -209,7 +209,7 @@ This will store the new theme at the end of the existing theme file. If a theme 
 You might want to check that changes have been made by printing out the property list using the command:  
 ```$ themeltspice.sh -p```" (See [Printing all settings](#printing-all-settings-stored-in-the-config-file))
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 ## Listing all themes available
 
@@ -245,6 +245,7 @@ Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
 $> _
 ```
 
+<div style="page-break-after: always;"></div>
 
 ## Printing all settings stored in the config file
 
@@ -382,13 +383,14 @@ NetlistEditorColor4)
 The BNF grammar for the theme file is extremely simple and is shown in Figure 2. below
 
 ```
-themes    ::= theme | theme <EMPTY_LINE> themes
-theme     ::= '[' theme-name ']' <NL> fields
-fields    ::= field | field <NL> fields
-field     ::= fieldname '=' digits
-fieldname ::= "" | alnum fieldname
-alnum     ::= "A" | "B" | ...
-digits    ::= "0" | "1" | ...
+themes        ::= theme | theme <EMPTY_LINE> themes
+theme         ::= theme_comment '[' theme-name ']' <NL> fields
+theme_comment ::= "" | alnum <NL>
+fields        ::= field | field <NL> fields
+field         ::= fieldname '=' digits
+fieldname     ::= "" | alnum fieldname
+alnum         ::= "A" | "B" | ...
+digits        ::= "0" | "1" | ...
  ```
 ***Fig 2: The simplified BNF grammar for the themes file format***
 
