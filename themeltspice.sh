@@ -14,6 +14,7 @@ copied_plist_file=/tmp/com.analog.LTspice.App.plist
 red="\033[31m"
 default="\033[39m"
 quiet=0
+verbose=0
 
 # Format error message
 errlog() {
@@ -140,6 +141,86 @@ dump_current_theme() {
 
 }
 
+# Delete named theme
+# Arg1: Theme file
+# Arg2: Theme name
+delete_theme() {
+    declare theme_file=$1
+    declare theme_name=$2
+    declare theme_name_regex="\[${theme_name}\]"
+    declare -i lineno=0
+    declare -i start_lineno=0
+    declare -i end_lineno=0
+    declare -i intheme=0
+    declare -i n=0
+    declare prevline=""
+
+    if [[ ! -f ${theme_file} ]]; then 
+        errlog "Theme file '%s' does not exist." ${theme_file} 
+        exit 1
+    fi
+
+    list_themes "${theme_file}" "${theme_name}"
+    if [[ $? -eq 0 ]]; then
+        errlog "Theme '%s' does not exist." "${theme_name}"
+        exit 1
+    fi
+
+    # This gets a bit convoluted since we need to keeptrack also of the immediate
+    # line above the theme name since it could be a reference URL to the theme
+    # in order to give credit to the creator of the theme.
+    while read -r line;
+    do
+        lineno=$((lineno+1))
+        if [[ ${line} =~ ${theme_name_regex} ]]; then
+            if [[ intheme -eq 1 ]]; then 
+                errlog "Corrupt theme file near line %d. Cannot delete theme." "${lineno}"
+                exit 1    
+            fi
+            intheme=1 
+            start_lineno=$lineno
+            end_lineno=$lineno
+        elif [[ ${intheme} -eq 1 ]]; then
+            if [[ (-z ${line} || §{line} =~ ${empty}) ]]; then
+                break
+            fi
+            n=$((n+1))
+            end_lineno=$((end_lineno+1))
+            if [[ ${n} -ge 35 ]]; then
+                errlog "Corrupt theme file near line %d. Cannot delete theme." "${lineno}"
+                exit 1
+            fi
+        fi
+        # As long as we have not found the theme we record the previous line
+        # in order to check if there is a single line URL to the source of the
+        # specific theme that can optionally exist. 
+        [[ ${intheme} -eq 0 ]] && prevline="${line}"
+    done < ${theme_file} 
+
+    # If the line just above the theme name is a text and not a blank line
+    # then we also delete that line (which is a theme comment)
+    [[ ! -z ${prevline} ]] && start_lineno=$((start_lineno-1))
+    # Delete blank line after the theme. We are guaranteed that the line is blank
+    # since finding a blank line is the only way to break out of the loop without
+    # it being a detected error
+    end_lineno=$((end_lineno+1)) 
+
+    if [[ ${verbose} -eq 1 ]]; then
+        infolog "Deleting line range [${start_lineno},${end_lineno}] in '${theme_file}'.\n\n"
+        sed -n "${start_lineno},${end_lineno}p" ${theme_file} 
+    fi
+
+    sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file} 
+
+    if [[ $? -eq 0 ]]; then
+        infolog "Theme '%s' deleted from '%s'.\n" "${theme_name}" "${theme_file}"
+    else
+        errlog "Could NOT delete theme '%s' from '%s'.\n" "${theme_name}" "${theme_file}"
+    fi
+
+}
+
+
 # Set a new theme by updating the configuration file in the third argument with the
 # named theme.
 # Arg1: Theme name
@@ -216,6 +297,7 @@ update_theme() {
 #                              name already exists in the theme file
 list_themes() {
     declare -i check_name=0
+    declare -i n=1
     if [[ $# -eq 2 ]]; then
         check_name=1
     fi
@@ -225,7 +307,6 @@ list_themes() {
     fi
 
     [[ $# -eq 1 ]] && infolog "Listing themes in '%s'\n" $1
-    n=1
     while read -r line;
     do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
@@ -268,7 +349,7 @@ copy_ltspice_plist() {
 # Dump the entire contet of the LTSpice configuration file in human readable format
 print_ltspice_plist() {
     [[ ! -f ${ltspice_plist_file} ]] && errlog "LTSpice plist file not found at '%s'." "${ltspice_plist_file}" && exit 1
-    infolog "'${ltspice_plist_file}' content: "
+    infolog "'${ltspice_plist_file}':\n"
     plutil -p ${ltspice_plist_file}
 }
 
@@ -283,6 +364,8 @@ usage() {
     echo "-l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists"
     echo "-p          : List content in LTSpice plist file"
     echo "-q          : Quiet no status output"
+    echo "-v          : Verbose status output"
+    echo "-x <NAME>   : Delete theme NAME from themes file"
 }
 
 #
@@ -291,9 +374,10 @@ usage() {
 declare -i OPTIND=0
 declare -i dump_flag=0
 declare -i list_flag=0
+declare -i delete_flag=0
 
 while [[ $OPTIND -le "$#" ]]; do
-  if getopts f:pdlhq option; then
+  if getopts f:pdlhqvx option; then
     case $option in
     f)
       ltspice_theme_file="${OPTARG}"
@@ -314,6 +398,12 @@ while [[ $OPTIND -le "$#" ]]; do
       ;;
     q)
       quiet=1
+      ;;
+    x)
+      delete_flag=1
+      ;;
+    v)
+      verbose=1
       ;;
     [?])
       usage "$(basename $0)"
@@ -352,6 +442,11 @@ fi
 
 if [[ ${dump_flag} -eq 1 ]]; then
     dump_current_theme ${theme_name} ${ltspice_theme_file} ${copied_plist_file}
+    exit 0
+fi
+
+if [[ ${delete_flag} -eq 1 ]]; then
+    delete_theme ${ltspice_theme_file} ${theme_name}
     exit 0
 fi
 

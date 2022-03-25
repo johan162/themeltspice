@@ -144,6 +144,8 @@ Usage:
               is specified check if <NAME> theme exists
 -p          : List content in **LTSpice** plist file
 -q          : Quiet no status output
+-v          : Verbose status output
+-x <NAME>   : Delete theme NAME from themes file
 ```
 
 There are two major use cases:
@@ -232,6 +234,7 @@ Use the '```-l```' option with a theme name
 ```
 $> themeltspice.sh -l mytheme
 *** ERROR *** Theme 'mytheme' DOESN'T exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
+$> _
 ```
 
 or
@@ -239,6 +242,7 @@ or
 ```
 $> themeltspice.sh -l default
 Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
+$> _
 ```
 
 
@@ -260,6 +264,22 @@ $> themeltspice.sh -p
 }
 $> _
 ```
+
+## Deleting a theme
+
+To delete a theme use the '```-x```' option. For example, to delete the theme '```softdark```' do the following:
+
+```
+$> themeltspice.sh -x softdark
+Theme 'default' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
+$> _
+```
+
+A one-level backup file is created with the name '```themes.ltt.BAK```' in the theme directory.
+
+By combining the '```-x```' option with '```-v```' option (verbose) the script will also print out the theme being deleted.
+
+> **Note:** if you want to update (write over) an existing theme you must first delete it. This is done on purpose to avoid unintentional data loss.
 
 <div style="page-break-after: always;"></div>
 
