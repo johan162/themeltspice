@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #=======================================================================
 # Name: themeltspice.sh
-# Description: Set and create the color theme for OSX version of LTSpice 
+# Description: Set and create the color theme for OSX version of LTSpice
 # Author: <johan162@gmail.com>
-# 
+#
 # MIT License
 #
 # Copyright (c) 2022 <johan162@gmail.com>
@@ -17,7 +17,7 @@
 #
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,20 +37,17 @@ copied_plist_file=/tmp/com.analog.LTspice.App.plist
 red="\033[31m"
 default="\033[39m"
 
-
 # Format error message
 errlog() {
     printf "$red*** ERROR *** "
-    printf "$@" 
+    printf "$@"
     printf "$default\n"
 }
-
 
 # Format info message
 infolog() {
     [[ ${quiet_flag} -eq 0 ]] && printf "$@"
 }
-
 
 # Make sure the theme directory and a default theme file exists
 init_theme_dir() {
@@ -64,7 +61,7 @@ init_theme_dir() {
         # Use the following command to get the encoded version into the paste buffer
         # when theme is updated. Then do a CMD-V to past into this file.
         # cat themes.ltt|bzip2|base64 -b60|pbcopy
-        cat <<NEWHEMEFILE  | base64 -d | bzcat > ${ltspice_theme_file}
+        cat <<NEWHEMEFILE | base64 -d | bzcat >${ltspice_theme_file}
 QlpoOTFBWSZTWQ9dhk4ABKnfgAAQQAP/8iqhCIo/79/AUAT4rIoqpaTGe7wQ
 kiExMmqNGhkDQA9RoAyGghKgNNANAAAAkIQhSNQZAAAAAIqImJtU0/TVNlNA
 D0mgGjyglPVUNGhoGgMTQAAB2aX0C9IHtd1B1ETwgHq1WEGvWWNUOOMjtkcc
@@ -89,17 +86,16 @@ kwBNPMfSyGo2xFcYmQrcNs5TN+F9orRFB2UidQqEbNRw4y0BQYEgUGQrXA23
 iIszUZ4m4fEuiq43qspctkIG0VDcNYrUK3FlxVjnmUmJgQj1o/kL/F3JFOFC
 QD12GTg=
 NEWHEMEFILE
-    echo "" >> ${ltspice_theme_file}
+        echo "" >>${ltspice_theme_file}
     fi
 }
-
 
 # Dump the current configuration in the plist file as new named theme
 # Arg 1: theme name
 # Arg 2: theme file to dump values to
 # Arg 3: plst file
 dump_current_theme() {
-    declare -a fields 
+    declare -a fields
     fields=(GridColor
         InActiveAxisColor
         WaveColor0
@@ -150,18 +146,18 @@ dump_current_theme() {
 
     infolog "Dumping current color setup from '%s' to '%s' as theme '%s'\n" $3 $2 $1
     touch ${theme_file}
-  
-    echo "[${theme_name}]" >> ${theme_file}
+
+    echo "[${theme_name}]" >>${theme_file}
 
     for field in ${fields[@]}; do
         val=$(plutil -extract ${field} raw -expect integer -n ${plist_file})
         if [[ $? -eq 0 ]]; then
-            printf "%s=%d\n" ${field} ${val} >> ${theme_file}
+            printf "%s=%d\n" ${field} ${val} >>${theme_file}
         else
             errlog "Field '${field}' does not exist in plist."
         fi
     done
-    echo "" >> ${theme_file}
+    echo "" >>${theme_file}
 
 }
 
@@ -175,12 +171,11 @@ ask_yn() {
     select yn in "Yes" "No"; do
         echo $yn
         case $yn in
-            Yes ) return 1 ;;
-            No ) return 0 ;;
+        Yes) return 1 ;;
+        No) return 0 ;;
         esac
     done
 }
-
 
 # Delete named theme
 # Arg1: Theme file
@@ -196,8 +191,8 @@ delete_theme() {
     declare -i n=0
     declare prevline=""
 
-    if [[ ! -f ${theme_file} ]]; then 
-        errlog "Theme file '%s' does not exist." ${theme_file} 
+    if [[ ! -f ${theme_file} ]]; then
+        errlog "Theme file '%s' does not exist." ${theme_file}
         exit 1
     fi
 
@@ -210,23 +205,22 @@ delete_theme() {
     # This gets a bit convoluted since we need to keeptrack also of the immediate
     # line above the theme name since it could be a reference URL to the theme
     # in order to give credit to the creator of the theme.
-    while read -r line;
-    do
-        lineno=$((lineno+1))
+    while read -r line; do
+        lineno=$((lineno + 1))
         if [[ ${line} =~ ${theme_name_regex} ]]; then
-            if [[ intheme -eq 1 ]]; then 
+            if [[ intheme -eq 1 ]]; then
                 errlog "Corrupt theme file near line %d. Cannot delete theme." "${lineno}"
-                exit 1    
+                exit 1
             fi
-            intheme=1 
+            intheme=1
             start_lineno=$lineno
             end_lineno=$lineno
         elif [[ ${intheme} -eq 1 ]]; then
             if [[ (-z ${line} || §{line} =~ ${empty}) ]]; then
                 break
             fi
-            n=$((n+1))
-            end_lineno=$((end_lineno+1))
+            n=$((n + 1))
+            end_lineno=$((end_lineno + 1))
             if [[ ${n} -ge 35 ]]; then
                 errlog "Corrupt theme file near line %d. Cannot delete theme." "${lineno}"
                 exit 1
@@ -234,40 +228,39 @@ delete_theme() {
         fi
         # As long as we have not found the theme we record the previous line
         # in order to check if there is a single line URL to the source of the
-        # specific theme that can optionally exist. 
+        # specific theme that can optionally exist.
         [[ ${intheme} -eq 0 ]] && prevline="${line}"
-    done < ${theme_file} 
+    done <${theme_file}
 
     # If the line just above the theme name is a text and not a blank line
     # then we also delete that line (which is a theme comment)
-    [[ ! -z ${prevline} ]] && start_lineno=$((start_lineno-1))
+    [[ ! -z ${prevline} ]] && start_lineno=$((start_lineno - 1))
 
     # Delete blank line after the theme. We are guaranteed that the line is blank
     # since finding a blank line is the only way to break out of the loop without
     # it being a detected error
-    end_lineno=$((end_lineno+1)) 
+    end_lineno=$((end_lineno + 1))
 
     if [[ ${verbose_flag} -eq 1 ]]; then
         infolog "Deleting line range [${start_lineno},${end_lineno}] in '${theme_file}'.\n\n"
-        sed -n "${start_lineno},${end_lineno}p" ${theme_file} 
+        sed -n "${start_lineno},${end_lineno}p" ${theme_file}
     fi
 
     ask_yn "Are you sure you wish to delete theme '${theme_name}' in '${theme_file}'?"
     if [[ $? -eq 1 ]]; then
-        sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file} 
+        sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file}
         if [[ $? -eq 0 ]]; then
             infolog "Theme '%s' deleted from '%s'.\n" "${theme_name}" "${theme_file}"
             exit 0
         else
             errlog "Could NOT delete theme '%s' from '%s'.\n" "${theme_name}" "${theme_file}"
             exit 1
-        fi        
+        fi
     else
-         infolog "${red}Theme '${theme_name}' NOT deleted.${default}\n"
-         exit 0
-    fi 
+        infolog "${red}Theme '${theme_name}' NOT deleted.${default}\n"
+        exit 0
+    fi
 }
-
 
 # Set a new theme by updating the configuration file in the third argument with the
 # named theme.
@@ -281,26 +274,25 @@ set_theme() {
     declare -i n=0
     declare empty='^[[:space:]]*$'
 
-    if [[ ! -f ${theme_file} ]]; then 
-        errlog "Theme file '%s' does not exist." ${theme_file} 
+    if [[ ! -f ${theme_file} ]]; then
+        errlog "Theme file '%s' does not exist." ${theme_file}
         exit 1
     fi
 
-    while read -r line;
-    do
+    while read -r line; do
         if [[ (-z ${line} || §{line} =~ ${empty}) && ${intheme} -eq 1 ]]; then
             break
         fi
         if [[ ${intheme} -eq 1 && ${n} -le 35 ]]; then
-            n=$((n+1))
+            n=$((n + 1))
             keypair='^([[:alnum:]]+)=([0-9]+)'
             [[ ${line} =~ ${keypair} ]]
             plutil -replace ${BASH_REMATCH[1]} -integer ${BASH_REMATCH[2]} $3
         fi
         if [[ ${line} =~ ${theme_name_regex} ]]; then
-            intheme=1 
+            intheme=1
         fi
-    done < ${theme_file}
+    done <${theme_file}
     if [[ ${intheme} -eq 0 ]]; then
         errlog "Specfied theme '%s' does not exist in theme file '%s'." $1 ${theme_file}
         exit 1
@@ -318,7 +310,7 @@ update_theme() {
 
     # Do the update and check file integrity
     set_theme ${theme_name} ${theme_file} ${copied_ltspice_file}
-    plutil -lint ${copied_ltspice_file} > /dev/null 2>&1
+    plutil -lint ${copied_ltspice_file} >/dev/null 2>&1
     if [[ $? -eq 0 ]]; then
         cp ${copied_ltspice_file} ${ltspice_plist_file}
         if [[ ! $? -eq 0 ]]; then
@@ -332,10 +324,9 @@ update_theme() {
     fi
 
     # Finally we need to reload the plist-cache for the change to take effect
-    defaults read ${ltspice_plist_file} > /dev/null
+    defaults read ${ltspice_plist_file} >/dev/null
     [[ ! $? -eq 0 ]] && errlog "Failed to reload cache."
 }
-
 
 # With one argument lists the name of all themes in the theme file and
 # with two argument checks of the theme name as a second argument already
@@ -350,13 +341,12 @@ list_themes() {
         check_name=1
     fi
     if [[ ! -f $1 ]]; then
-         errlog "Can not find theme file '%s'." $1    
-         exit 1
+        errlog "Can not find theme file '%s'." $1
+        exit 1
     fi
 
     [[ $# -eq 1 ]] && infolog "Listing themes in '%s'\n" $1
-    while read -r line;
-    do
+    while read -r line; do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
             if [[ ${check_name} -eq 0 ]]; then
                 infolog "%2d. %s\n" $n ${BASH_REMATCH[1]}
@@ -365,9 +355,9 @@ list_themes() {
                     return 1
                 fi
             fi
-            n=$((n+1))
+            n=$((n + 1))
         fi
-    done < $1
+    done <$1
     return 0
 }
 
@@ -380,7 +370,7 @@ check_running_ltspice() {
 }
 
 # Copy the application configuration file to a temporary location where we do the
-# changes on the config file and make a backup copy if one does not exist 
+# changes on the config file and make a backup copy if one does not exist
 # and store it in the theme directory. This secures that the very first configuration
 # file can be restored manually if something really goes wrong.
 copy_ltspice_plist() {
@@ -405,7 +395,7 @@ print_ltspice_plist() {
 usage() {
     echo "Set or create a named color theme for LTSpice"
     echo "Usage:"
-    echo "%$1 [-f <FILE>] [-d] [-l] [-h] [<THEME>]" 
+    echo "%$1 [-f <FILE>] [-d] [-l] [-h] [-p] [-q] [-v] [-x <THEME>] [-y] [<THEME>]"
     echo "-d          : Dump current plist to default or named theme file as specified theme"
     echo "-f <FILE>   : Use the specified file as theme file"
     echo "-h          : Print help and exit"
@@ -431,39 +421,39 @@ declare -i verbose_flag=0
 while [[ $OPTIND -le "$#" ]]; do
     if getopts f:pdlhqvxy option; then
         case $option in
-            f)
-                ltspice_theme_file="${OPTARG}"
-                ;;
-            l)
-                list_flag=1
-                ;;
-            d)
-                dump_flag=1
-                ;;
-            h)
-                usage "$(basename $0)"
-                exit 0
-                ;;
-            p)
-                print_ltspice_plist
-                exit 0
-                ;;
-            q)
-                quiet_flag=1
-                ;;
-            x)
-                delete_flag=1
-                ;;
-            v)
-                verbose_flag=1
-                ;;
-            y)
-                yes_flag=1
-                ;;
-            [?])
-                usage "$(basename $0)"
-                exit 1
-                ;;
+        f)
+            ltspice_theme_file="${OPTARG}"
+            ;;
+        l)
+            list_flag=1
+            ;;
+        d)
+            dump_flag=1
+            ;;
+        h)
+            usage "$(basename $0)"
+            exit 0
+            ;;
+        p)
+            print_ltspice_plist
+            exit 0
+            ;;
+        q)
+            quiet_flag=1
+            ;;
+        x)
+            delete_flag=1
+            ;;
+        v)
+            verbose_flag=1
+            ;;
+        y)
+            yes_flag=1
+            ;;
+        [?])
+            usage "$(basename $0)"
+            exit 1
+            ;;
         esac
     elif [[ $OPTIND -le "$#" ]]; then
         theme_name+="${!OPTIND}"
@@ -480,7 +470,7 @@ if [[ $list_flag -eq 1 ]]; then
         list_themes ${ltspice_theme_file} ${theme_name}
         if [[ $? -eq 1 ]]; then
             infolog "Theme '${theme_name}' exists in '${ltspice_theme_file}'\n"
-        else 
+        else
             errlog "Theme '${theme_name}' DOESN'T exists in '${ltspice_theme_file}'"
         fi
         exit 0
@@ -490,9 +480,9 @@ if [[ $list_flag -eq 1 ]]; then
 fi
 
 if [[ -z ${theme_name} ]]; then
-   errlog "No theme name specified."
-   usage $(basename $0)
-   exit 1
+    errlog "No theme name specified."
+    usage $(basename $0)
+    exit 1
 fi
 
 if [[ ${dump_flag} -eq 1 ]]; then
