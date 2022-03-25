@@ -136,15 +136,14 @@ You can easily check if the new theme have been added correctly by listing the t
 ```
 Set or create a named color theme for LTSpice
 Usage:
-%themeltspice.sh [-f <FILE>] [-d] [-l] [-h] [<THEME>]
+%themeltspice.sh [-f <FILE>] [-d] [-l] [-h] [-p] [-q] [-v] [-x <THEME>] [-y] [<THEME>]
 -d          : Dump current plist to default or named theme file as specified theme
 -f <FILE>   : Use the specified file as theme file
 -h          : Print help and exit
--l [<NAME>] : List themes in default or named theme file or íf <NAME> 
-              is specified check if <NAME> theme exists
+-l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists
 -p          : List content in LTSpice plist file
--q          : Quiet no status output
--v          : Verbose status output
+-q          : quiet_flag no status output
+-v          : verbose_flag status output
 -x <NAME>   : Delete theme NAME from themes file
 -y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)
 ```
@@ -162,9 +161,12 @@ In addition to these major use cases there are some supporting function that are
 
 &nbsp;
 
-> **Note:** A copy fo the original **LTSpice** plist configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case (for some reason) the configuration file gest corrupt you can always restore a clean backup.
+> **Note:** A copy fo the original **LTSpice** property list (plist) configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case the configuration file gest corrupt you can always restore a this as clean backup. The backup file is created the first time you run the script or if it is ever deleted.
 
-&nbsp;
+
+> **Tip:** If you ever mess up the themes file and want to restore it to the default then the easiest way is to just delete the '```/User/<USER>/.ltspice_themes/themes.ltt```' file. The next time you run '```themeltspice.sh```' it will be restored.
+
+<div style="page-break-after: always;"></div>
 
 ## Setting a new theme for LTSpice
 
@@ -204,13 +206,12 @@ $> _
 
 This will store the new theme at the end of the existing theme file. If a theme with this name already exsts an error message will be printed informing about this.
 
-&nbsp;
+<div style="page-break-after: always;"></div>
 
 > **WARNING:** You might have to quit and start **LTSpice** twice to force the update of the plist file from the plist cache before running the dump command.  
 You might want to check that changes have been made by printing out the property list using the command:  
 ```$ themeltspice.sh -p```" (See [Printing all settings](#printing-all-settings-stored-in-the-config-file))
 
-<div style="page-break-after: always;"></div>
 
 ## Listing all themes available
 
@@ -327,13 +328,13 @@ on its own, one must also force a refresh of the property cash using "```default
 
 ## Directories and files used
 
-- [```/User/<USER>/.ltspice_themes/themes.ltt```]  
+- '```/User/<USER>/.ltspice_themes/themes.ltt```'  
 The default location of themes
 
-- [```/User/<USER>/.ltspice_themes/com.analog.LTspice.App.plist.ORIGINAL```]  
+- '```/User/<USER>/.ltspice_themes/com.analog.LTspice.App.plist.ORIGINAL```'  
 Copy of the **LTSpice** application plist file at the time of first run of this script
 
-- [```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist```]  
+- '```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist```'  
 **LTSpice** application plist file
 
 <div style="page-break-after: always;"></div>
