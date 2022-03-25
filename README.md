@@ -27,7 +27,7 @@ That is all there is to it for the most basic use case. Read on if you want to k
 - [Theme file format](#theme-file-format)
 - [Theme reference screenshots](#theme-reference-screenshots)
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 # Introduction
 |[back to content table](#content)|
@@ -36,8 +36,7 @@ This is not meant to be an introduction to either the usage or function of
 the electric circuit simulator **LTSpice**. 
 It is therefore assumed you have installed and have basic knowledge of the **OSX** version of **LTSpice**.
 
-**Note:** This theme manager is unique to **OSX** and will not in any shape or form work 
-on a the Window version of **LTSpice**. Instead see 
+>**Note:** This theme manager is unique to **OSX** and will not in any shape or form work  on a the Window version of **LTSpice**. Instead see 
 [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt) 
 if you are looking for a Windows based **LTSpice** theme manager.
 
@@ -69,11 +68,14 @@ Once those keystrokes are
 mastered it is usually substantially faster to create a circuit diagram and setup a simulation
 in the native **OSX** version than the Windows dito. The **OSX** version also have context sensitive menu (trackpad "right-click") in most places.
 
+<div class="page"/>
+
 To be fair. The **OSX** version does have some missing functionality but nothing really serious for pro or semi-pro usage. The main *functional* differences are:
 
-1. No dialogue help to enter ```.meas``` simulation command. 
+1. No dialogue help to enter '```.meas```' simulation command. 
 2. No keyboard shortcut editor
-3. Not possible to edit ```.op``` operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an ```.op``` label.
+3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.
+4. No keyboard shortcuts for adding passive elements (i.e. resistors, capacitors, inductors).
  
 
 **Why do this as a bash shell script?**
@@ -81,7 +83,7 @@ To be fair. The **OSX** version does have some missing functionality but nothing
 Why oh why was this done as a bash shell script I can hear people cry out. 
 Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, bash is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
 Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
-If you envision a program with more than around 600-800 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
+If you envision a program with more than around ~1000 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
 
 So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` (since ```zsh``` even has a "bash" compatibilty mode) and it might very well be a good idea to pursuite.
 
@@ -89,7 +91,7 @@ So why not write it as a ```zsh``` script? It would be perfectly fine to convert
 
 The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the **OSX** world. That state of affairs cannot stand and has now been corrected!
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 # Installation
 
@@ -122,12 +124,14 @@ You can easily check if the new theme have been added correctly by listing the t
 
 > **WARNING!** The format of the **OSX** and Windows version of the theme files are not compatible since the developer of **LTSpice** have used different names for the control fields in the Windows and the **OSX** version.
 
+<div class="page"/>
+
 ## Known Limitations
 
 - Windows theme files are not compatible with **OSX** and vice versa. *C'est la vie!*  
 *(However, it is not terrible hard to manually fix those few differences and then copy a theme definition as hinted in the section "[Theme file format](#theme-file-format)")*
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 # Usage
 
@@ -166,7 +170,7 @@ In addition to these major use cases there are some supporting function that are
 
 > **Tip:** If you ever mess up the themes file and want to restore it to the default then the easiest way is to just delete the '```/User/<USER>/.ltspice_themes/themes.ltt```' file. The next time you run '```themeltspice.sh```' it will be restored.
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 ## Setting a new theme for LTSpice
 
@@ -206,7 +210,7 @@ $> _
 
 This will store the new theme at the end of the existing theme file. If a theme with this name already exsts an error message will be printed informing about this.
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 > **WARNING:** You might have to quit and start **LTSpice** twice to force the update of the plist file from the plist cache before running the dump command.  
 You might want to check that changes have been made by printing out the property list using the command:  
@@ -247,7 +251,7 @@ Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
 $> _
 ```
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 ## Printing all settings stored in the config file
 
@@ -295,7 +299,7 @@ By combining the '```-x```' option with '```-v```' option (verbose) the script w
 
 > **Note:** if you want to update (write over) an existing theme you must first delete it. This is done on purpose to avoid unintentional data loss.
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 # How the script works
 
@@ -337,22 +341,15 @@ Copy of the **LTSpice** application plist file at the time of first run of this 
 - '```/Users/<USER>/Library/Preferences/com.analog.LTspice.App.plist```'  
 **LTSpice** application plist file
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 # Theme file format
 
 |[back to content table](#content)|
 
+## Stored color fields
+
 For each theme a total of 34 color parameters are stored as listed in figure 1 below. 
-
-> **Difference between **OSX** the Windows version theme format:**  
-Unfortunately there are three minor differences between the Windows version and **OSX** version theme files in that some fields have different names in the two versions.  
-There are three major differences:  
---OSX uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
---OSX uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".  
---The window version have a "```SchematicColor13```" which doesn't exist in the **OSX** version.  
-For this reason it is not possible to copy theme directly between the Windows and **OSX** without som manual fixes. 
-
 
 ```
 GridColor
@@ -393,6 +390,8 @@ NetlistEditorColor4)
 
 ***Fig 1: The fields stored as a color theme***
 
+<div class="page"/>
+
 ## BNF Grammar
 The BNF grammar for the theme file is extremely simple and is shown in Figure 2. below
 
@@ -410,7 +409,19 @@ digits        ::= "0" | "1" | ...
 
 &nbsp;
 
-<div style="page-break-after: always;"></div>
+## Difference between **OSX** the Windows version theme format
+
+Unfortunately there are a couple differences between the Window and **OSX** version of **LTSpice**. 
+These changes also impact the theme files in the following three ways:
+
+1. OSX uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
+2. OSX uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".  
+3. The window version have a "```SchematicColor13```" which doesn't exist in the **OSX** version.  
+For this reason it is not possible to copy theme directly between the Windows and **OSX** without som manual fixes. 
+
+
+
+<div class="page"/>
 
 # Theme reference screenshots
 
@@ -420,7 +431,7 @@ digits        ::= "0" | "1" | ...
 
 ![default theme](screenshots/default.png)
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 ## 2. Theme: "darcula"
 
@@ -430,7 +441,7 @@ digits        ::= "0" | "1" | ...
 
 ![sakabug theme](screenshots/sakabug.png)
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 ## 4. Theme: "twilght-after-dark"
 
@@ -440,7 +451,7 @@ digits        ::= "0" | "1" | ...
 
 ![softdark theme](screenshots/softdark.png)
 
-<div style="page-break-after: always;"></div>
+<div class="page"/>
 
 ## 6. Theme: "blackwhite"
 
