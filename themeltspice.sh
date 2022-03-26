@@ -2,7 +2,7 @@
 #=======================================================================
 # Name: themeltspice.sh
 # Description: Set and create the color theme for OSX version of LTSpice
-# Author: Jphan Persson <johan162@gmail.com>
+# Author: Johan Persson <johan162@gmail.com>
 #
 # MIT License
 #
