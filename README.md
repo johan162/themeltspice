@@ -7,10 +7,12 @@
 # Quickstart &lt;TL;DR>
 
 
-1. Copy the file "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH). Change to that directory.
-2. To list all available themes run:  
-```$ ./themeltspice.sh -l```
-2. To set a new theme, say '```darcula```', run:  
+1. Copy the file "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH). Change to that directory.  
+
+2. To list available themes run:  
+```$ ./themeltspice.sh -l```  
+
+2. To use a new theme with **LTSpice**, say '```darcula```', run:  
 ```$ ./themeltspice.sh darcula```
 
 When you now run **LTSpice** you will see that the color palette has changed. You can see [examples of all available themes](#theme-reference-screenshots) as well. 
