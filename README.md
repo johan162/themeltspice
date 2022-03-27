@@ -72,9 +72,12 @@ in the native **OSX** version than the Windows dito. The **OSX** version also ha
 
 To be fair. The **OSX** version does have some missing functionality but nothing really serious for pro or semi-pro usage. The main *functional* differences are:
 
-1. No dialogue help to enter '```.meas```' simulation command. 
-2. No keyboard shortcut editor
-3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.
+1. No dialogue help to enter '```.meas```' simulation command.  
+
+2. No keyboard shortcut editor  
+
+3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.  
+
 4. No keyboard shortcuts for adding passive elements (i.e. resistors, capacitors, inductors).
  
 
@@ -414,10 +417,13 @@ digits        ::= "0" | "1" | ...
 Unfortunately there are a couple differences between the Window and **OSX** version of **LTSpice**. 
 These changes also impact the theme files in the following three ways:
 
-1. OSX uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
-2. OSX uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".  
-3. The window version have one additional schematic color setting which is the "Graphic Annotation" color which do not exist in the **OSX** version. This means that the window version have colors 0-13 and the **OSX** version 0-12 which means that "```SchematicColor13```" (which is the graphic annotation color) doesn't exist in the **OSX** version.  
-For this reason it is not possible to copy theme directly between the Windows and **OSX** without som manual fixes. 
+1. **OSX** uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
+
+2. **OSX** uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".   
+
+3. The window version have one additional schematic color setting which is the *"Graphic Annotation"* color which does not exist in the **OSX** version. This means that the window version have schematic colors 0-13 and the **OSX** version 0-12. In practice this means that the color "```SchematicColor13```" (which is the graphic annotation color) doesn't exist in the **OSX** version.  
+
+For the above reason it is not possible to copy themes directly between the Window and **OSX** version of **LTSpice** without manual conversion adressing the issues above. 
 
 
 
