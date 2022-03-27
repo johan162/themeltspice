@@ -110,14 +110,14 @@ The script uses the default location of "```~/.ltspice_themes```" to store the t
 
 The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "```-f```" option you can also specify another file location to be used a theme file. 
 
-This default theme file installed (as of this writing) contain these six themes:
+This default theme file installed (as of this writing) contains these six themes:
 
-1. default (LTSpice default)
-2. sakabug
-3. twilight-after-dawn
-4. dracula
-5. softdark
-6. blackwhite
+1. "default" (**LTSpice** default)
+2. "sakabug"
+3. "twilight-after-dawn"
+4. "dracula"
+5. "softdark"
+6. "blackwhite"
 
 Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
 
@@ -127,13 +127,12 @@ You can easily check if the new theme have been added correctly by listing the t
 
     $> themeltspice.sh -l
 
-> **WARNING!** The format of the **OSX** and Windows version of the theme files are not compatible since the developer of **LTSpice** have used different names for the control fields in the Windows and the **OSX** version.
 
 <div class="page"/>
 
 ## Known Limitations
 
-- Windows theme files are not compatible with **OSX** and vice versa. *C'est la vie!*  
+- Neither theme files nor **LTSpice** configuration files are compatible between the **OSX** and **Window** version.  *C'est la vie!*  
 *(However, it is not terrible hard to manually fix those few differences and then copy a theme definition as hinted in the section "[Theme file format](#theme-file-format)")*
 
 <div class="page"/>
