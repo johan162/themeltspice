@@ -404,8 +404,8 @@ usage() {
     echo "-h          : Print help and exit"
     echo "-l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists"
     echo "-p          : List content in LTSpice plist file"
-    echo "-q          : quiet_flag no status output"
-    echo "-v          : verbose_flag status output"
+    echo "-q          : Quiet  (no output to stdout)"
+    echo "-v          : Verbose status output"
     echo "-x <NAME>   : Delete theme NAME from themes file"
     echo "-y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)"
 }

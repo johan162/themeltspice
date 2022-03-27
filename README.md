@@ -4,7 +4,7 @@
 
 &nbsp;
 
-# Quckstart &lt;TL;DR>
+# Quickstart &lt;TL;DR>
 
 
 1. Copy the file "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH). Change to that directory.
@@ -416,7 +416,7 @@ These changes also impact the theme files in the following three ways:
 
 1. OSX uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
 2. OSX uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".  
-3. The window version have a "```SchematicColor13```" which doesn't exist in the **OSX** version.  
+3. The window version have one additional schematic color setting which is the "Graphic Annotation" color which do not exist in the **OSX** version. This means that the window version have colors 0-13 and the **OSX** version 0-12 which means that "```SchematicColor13```" (which is the graphic annotation color) doesn't exist in the **OSX** version.  
 For this reason it is not possible to copy theme directly between the Windows and **OSX** without som manual fixes. 
 
 
