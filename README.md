@@ -1,6 +1,6 @@
 # README 'themeltspice.sh'
-> **WHAT IS THIS?** ```'themeltspice.sh'``` is a color theme manager for the **OSX** version of [LTSpice electric circuit simulator](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) which is a version of the classical SPICE (Simulation Program with Integrated Circuit Emphasis) simulator.  
-[LTSpice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) is made freely available by [Analog Devices](https://www.analog.com).
+> **WHAT IS THIS?** ```'themeltspice.sh'``` is a color theme manager for the **OSX** version of [LTSpice electric circuit simulator](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) which is a version of the classical SPICE (*Simulation Program with Integrated Circuit Emphasis*) simulator.  
+[LTSpice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) was written by **Mike Engelhardt** (now at [www.MarcusAureliusSoftware.com](www.MarcusAureliusSoftware.com)) and is made freely available by [Analog Devices](https://www.analog.com). This simulator is one of the fastest and numerically most robust circuit simulator currently available - and it is free!
 
 &nbsp;
 
