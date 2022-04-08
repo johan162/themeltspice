@@ -6,14 +6,22 @@
 
 # Quickstart &lt;TL;DR>
 
+The absolute easiest installation is to use the Homebrew package manager for OSX. 
 
-1. Copy the file "```themeltspice.sh```" to a directory of your choice (or somewhere in your PATH). Change to that directory.  
+```
+$> brew tap johan162/themeltspice
+$> brew install themeltspice
+```
 
-2. To list available themes run:  
-```$ ./themeltspice.sh -l```  
+This will install `themeltspice.sh` in `/usr/local/bin` 
+
+## Usage
+
+1. To list available themes run:  
+```$ themeltspice.sh -l```  
 
 2. To use a new theme with **LTSpice**, say '```darcula```', run:  
-```$ ./themeltspice.sh darcula```
+```$ themeltspice.sh darcula```
 
 When you now run **LTSpice** you will see that the color palette has changed. You can see [examples of all available themes](#theme-reference-screenshots) as well. 
 
@@ -101,6 +109,28 @@ The inspiration for this work comes from the [Windows **LTSpice** theme manager]
 # Installation
 
 |[back to content table](#content)|
+
+## Using Homebrew
+
+The absolute easiest installation is to use the Homebrew package manager for OSX. 
+
+```
+$> brew tap johan162/themeltspice
+...
+$> brew install themeltspice
+...
+$> _
+```
+
+This will install `themeltspice.sh` in `/usr/local/bin` which you can verify as so:
+
+```
+$> which themeltspice.sh
+/usr/local/bin/themeltspice.sh
+$> _
+```
+
+## Direct copy
 
 There is no installation program for this since it is only one executable script file and you are free to place that file anywhere at your conveniance. 
 
