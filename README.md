@@ -13,7 +13,11 @@ $> brew tap johan162/themeltspice
 $> brew install themeltspice
 ```
 
-This will install `themeltspice.sh` in `/usr/local/bin` 
+This will install `themeltspice.sh` in `/usr/local/bin`, and give you automatic updates
+in the future via Homebrew update function. 
+
+Alternativly you can manually just copy `themeltspice.sh` to a directory of your choice.
+
 
 ## Usage
 
