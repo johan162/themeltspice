@@ -91,8 +91,6 @@ To be fair. The **OSX** version does have some missing functionality but nothing
 2. No keyboard shortcut editor  
 
 3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.  
-
-4. No keyboard shortcuts for adding passive elements (i.e. resistors, capacitors, inductors).
  
 
 **Why do this as a bash shell script?**
@@ -134,6 +132,11 @@ $> which themeltspice.sh
 $> _
 ```
 
+> **Tip:** Use `alias` to get a shorter command, for exmple adding   
+  `$> alias ltt="/usr/local/bin/themeltspice.sh"`  
+to your `.zshenv` will let you use `ltt` as the command name. 
+
+
 ## Direct copy
 
 There is no installation program for this since it is only one executable script file and you are free to place that file anywhere at your conveniance. 
@@ -152,6 +155,7 @@ This default theme file installed (as of this writing) contains these six themes
 4. "dracula"
 5. "softdark"
 6. "blackwhite"
+7. "redblack"
 
 Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
 
@@ -268,6 +272,7 @@ Listing themes in '/Users/<USER>/.ltspice_themes/themes.txt''
  4. dracula
  5. softdark
  6. blackwhite
+ 7. redblack
 $> _
 ```
 
@@ -320,14 +325,14 @@ Are you sure you wish to delete theme 'softdark' in '/Users/ljp/.ltspice_themes/
 1) Yes
 2) No
 #? 1
-Theme 'default' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
+Theme 'softdark' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
 $> _
 ```
 As a safety precaution the deletion of a theme have to be confirmed by an interactive question. To avoid this question and delete directly (perhaps in a script) add the '```-y```' option as so:
 
 ```
 $> themeltspice.sh -xy softdark
-Theme 'default' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
+Theme 'softdark' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
 $> _
 ```
 
@@ -497,3 +502,7 @@ For the above reason it is not possible to copy themes directly between the Wind
 ## 6. Theme: "blackwhite"
 
 ![blackwhite theme](screenshots/blackwhite.png)
+
+## 7. Theme: "redblack"
+
+![redblack theme](screenshots/redblack.png)
