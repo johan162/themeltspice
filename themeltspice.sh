@@ -31,6 +31,7 @@
 set -u
 
 # Default locations for theme and configuration files
+version=v1.5.0
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
 ltspice_theme_dir=/Users/$(whoami)/.ltspice_themes
 ltspice_theme_file=${ltspice_theme_dir}/themes.ltt
@@ -65,30 +66,32 @@ init_theme_dir() {
         # when theme is updated. Then do a CMD-V to past into this file.
         # cat themes.ltt|bzip2|base64 -b60|pbcopy
         cat <<NEWHEMEFILE | base64 -d | bzcat >${ltspice_theme_file}
-QlpoOTFBWSZTWbfTEBgABVDfgAAQAAP/8iqlDIo/79/AUAV561ziUCtaBh56
-pCKiTSaPQepoymAGgA1GBJAmmiVNQPUGRoAAACTShJoU8oaA0AAABhFRCejU
-TeVHqekZNAGg9QMCJTQIkQAMjQAAA4hqemTnYdHJijikvKWB1ZjUoi9aZGYE
-rUqZZWtTpnbHDVc56ZhlzvY9aGeGqb4sX1a03AzDcXUHMN2y0cNXo1t3TM3M
-CGSk0zdMwZN7Rgmczhg2mbzPc/p7y22z72bK+Ofj9eMTE4WojnrgyahuMwVQ
-Yk8SF2P1ry4xtrDbtWm9jZUUzb5DbWuJNG2pYGxwBxkQUMoFmK23achfNL7l
-GnCfk0aRnMeJzFinWJ1q5bWrqUMFDogjrRr1UDMMmYYEIyETncK31WZxByLj
-o0JypIFxdubhsiXFgN3WrBdYcYdcOQYtJTAx0s7grhTPOMXpgVgtxCSJGIQi
-MjvXDXYN0lJkIloQUt83Qdy9RIXOIeItFLVsF6M3eS9QiJ1tTpMFV1bMa1F9
-hGBJEgxTG9OueB0ljBbG7MzyhTRxRYWNtQqXUaYVhCbQscJI5xMXG1CqV1WM
-CZkMDW95aa3yFWEWp5ERCa+XuDUKQraudkOnCEwQ10YNUdVLqEbVMSqWM3Kq
-IqCgdUTNKuioDi6aXpMqEuvFSyI8R0OKlIdKNEQqVQULqepVCy7TSGzvgl65
-lO7ccH6HR3M8ilPiKra8fcLU5dabPVuzgxnNFg4ilk3y4eCKOmKct0JnwSie
-911W0bZI4y7S0U6DUxKLMTLMmnHfU58gdTJhXV4VlwhENzlrjGBbMm4o6JR7
-PO9Y26d8Xi44FAyc6tU2jXTTs/6YsdIFo82y0beMO2gcXcnLW2XpDrrrF3DX
-p3yYa9wzeEjeRMD9268GYGBmGKsWLXi1S6yxwHbsb3vicZWuAG+9+L2CWfOp
-8WIkc6zTJ6L0XoWWWWOmKKPCY3y1raxQLHx/RgrmFTVsnYulWo5ZMatmWy9b
-DaYedLROjWh8atJpWKVk7h3Jtw1lbi21cZRkxYUcTaNobctU1MQpVkma5mp3
-TJg0Lh6qdkmJ9LGtBljKKDFERQQUWMRGRrYMSysSjUY2CUiFstBtLLEaxCiI
-MYrGIjBBFQSIqCRgxR+od9iTzyAdpJ2JJF9III7LdunOcPvZWNhAlQx8KFd6
-im75EBs/mWuzPqPxFTNRSL7PBYlq1phf8KBuj3HZ/oI3tdcrQVLlZ5UDpjsl
-/TZjLSVwpUUv+t9jYKpxMV8tEOSyioHXFyUC9ZToQoYlZyUDGqizyi0gqRu+
-llZR/iosGgVFoUC0g4TQEChv4rW7J1rTQYcrQQy1Ah0YcLoecXUopVblAsUC
-bLB0wciRfJYCA870eC/BdyRThQkLfTEBgA==
+QlpoOTFBWSZTWQDE2bQABiFfgAAQAAP/8iqlDIo/79/AUAYeG7aAAAAGHA6C
+pRIZTak3ip+giPTQ00g9TTNQJKanoU/VJ6RoYAQxGRtT0ASaVKeUAAekyAAA
+AxjIZDQaDRoA0ADQwSIEEUVGj1AYEyAAHGwtfWB5CPgqBzA5hKOhAj5amwgY
+38kFDCRkOBkMpyyXMQ2Z8XqquHVZ8Wi3etymfMBfMJVVcl5yZcsNNbYG2ljN
+kYpOKSpNG1uUzKJGiiEra2MoTS2MxIUhx1WwonG8l9S/5WyV989ysyK7jdnX
+2x6LzWZTVoQ4pmTYDAM2WY0crs46MMMscG3KtNqxwoY2VEfqMsviVmFqEGGk
+QNEljUiiFWWCqYsWZ2MA6KMDnvQoiMMNVycEJ09IULNFMwzV0hhZFsKK8HJX
+0CRsabSaGMGxi7tkm/YT4xYAWeKUjqE2FAGwyhbGigBgqWtQigGq4w1xYJMC
+QJTC/CFtiQWhYduypTCbI4xtiYNIY2waPPIRnkmy0qOEopykWtnTZYec1hNB
+orgomdC8wNG2jejvN9Ki+Uir1xVpNF3i2uM0so14xpg20mAwWTq2tHeC2iFZ
+F5CedESt0uqthtTBxUrT8RYxbCk8S7CKJ4dTWp2Eq6Xi0NCY0mD1GuGk9RyV
+a4TpUdmZJT13W3JkKgva1ubgqZUhQMKeizg7JPFa54AuBjLDF1tZdyTZJaIV
+qqLV+CtB0PB4vmpCQPIJsoaJ9R42jqsKRrwxaKlYrwijBeBGWrC2s1KdBs89
+APpzlxD77IT6HpEHbJtUeosva9I3DlYOeaK0oXpuFai8byiEcaCGmjZ1WuJp
+AaTQq6rSLLPQCSunmeLTk4NC615awuEjKmkaOJrnKg4bLXnUOwolt2Qagagl
+iTRs6WcTSIhUbFM+AFfHp577BqFEdVLpAi0NQeLLeGeGQ4/pZC8GENdjulRx
+dxcUiVlLRpTtOpSPiT4ANy9ZEHKlvRuGM9KH7NSo8NkL0bBg2MvQuLPVlh4N
+cIQQ68K3t7OqRhtdEHDzp9XwAc/Yq9DiKIPG6o+V8r5NGjRohMss9KnfdLNr
+ikDkcI+WF94XV6a3JBswMNT3ZU5psOLWbDaYQ6MDCcMMIODLMToOKlytzckl
+6gK5eydPNTyzhl0aRi6noxDN07q6JlUtFHM7zK3bTRiXT6AfoAkP5wnDhDUJ
+hAsEFERGCCixjGIDWkYlCjEo1iDSJSIWhbBLSyxGoMKIwYgqDERIwREQSMRQ
+SMEER9Q4UGTSBDUAciAQPCgkm7R4X06a6fzdjWxRbgz44MeAifb9BJZ8S3ph
+5abM3uiJ0ESs5z2FWgZY67vyI+9eDv+RJLuO/H+wiaN73EbMuWPxZ3vPbm30
+zET6dfTlLJETq2D01U5f4XWCN1ZvEdguvyba/VVlrtEZwQacqzZCJXV1GVed
+/yEFJeEF4jQpOzWJIYOPUY6d07RhqR3dAjLagRijlOXBlaAhYwJgIsARhVYl
+9JtWrrRQJPC6vMf8XckU4UJAAxNm0A==
 NEWHEMEFILE
         echo "" >>${ltspice_theme_file}
     fi
@@ -406,7 +409,8 @@ usage() {
     echo "-l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists"
     echo "-p          : List content in LTSpice plist file"
     echo "-q          : Quiet  (no output to stdout)"
-    echo "-v          : Verbose status output"
+    echo "-V          : Verbose status output"
+    echo "-v          : Print version and exit"
     echo "-x <NAME>   : Delete theme NAME from themes file"
     echo "-y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)"
 }
@@ -424,7 +428,7 @@ declare -i verbose_flag=0
 declare theme_name
 
 while [[ $OPTIND -le "$#" ]]; do
-    if getopts f:pdlhqvxy option; then
+    if getopts f:pdlhqvxyV option; then
         case $option in
         f)
             ltspice_theme_file="${OPTARG}"
@@ -450,6 +454,10 @@ while [[ $OPTIND -le "$#" ]]; do
             delete_flag=1
             ;;
         v)
+            infolog "$version\n"
+            exit 0
+            ;;
+        V)
             verbose_flag=1
             ;;
         y)
