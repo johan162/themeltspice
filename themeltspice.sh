@@ -31,7 +31,7 @@
 set -u
 
 # Default locations for theme and configuration files
-version=v1.5.0
+version=v1.5.1
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
 ltspice_theme_dir=/Users/$(whoami)/.ltspice_themes
 ltspice_theme_file=${ltspice_theme_dir}/themes.ltt
@@ -425,7 +425,7 @@ declare -i delete_flag=0
 declare -i yes_flag=0
 declare -i quiet_flag=0
 declare -i verbose_flag=0
-declare theme_name
+declare theme_name=""
 
 while [[ $OPTIND -le "$#" ]]; do
     if getopts f:pdlhqvxyV option; then
@@ -474,9 +474,7 @@ while [[ $OPTIND -le "$#" ]]; do
     fi
 done
 
-check_running_ltspice
 init_theme_dir
-copy_ltspice_plist
 
 if [[ $list_flag -eq 1 ]]; then
     if [[ ! -z ${theme_name} ]]; then
@@ -491,6 +489,9 @@ if [[ $list_flag -eq 1 ]]; then
     list_themes ${ltspice_theme_file}
     exit 0
 fi
+
+check_running_ltspice
+copy_ltspice_plist
 
 if [[ -z ${theme_name} ]]; then
     errlog "No theme name specified."

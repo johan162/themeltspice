@@ -186,12 +186,12 @@ Usage:
 %themeltspice.sh [-f <FILE>] [-d] [-l] [-h] [-p] [-q] [-v] [-x <THEME>] [-y] [<THEME>]
 -d          : Dump current plist to default or named theme file as specified theme
 -f <FILE>   : Use the specified file as theme file
--h          : Print help and exit
+-h          : Show help and exit
 -l [<NAME>] : List themes in default or named theme file or íf <NAME> is specified check if <NAME> theme exists
 -p          : List content in LTSpice plist file
--q          : quiet_flag no status output
--V          : verbose_flag status output
--v          : print version and exit
+-q          : Quiet, no status output
+-V          : Verbose status output
+-v          : Show version and exit
 -x <NAME>   : Delete theme NAME from themes file
 -y          : Force 'yes' answer to any interactive questions (e.g. deleting theme)
 ```
