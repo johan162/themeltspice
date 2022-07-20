@@ -31,14 +31,18 @@
 set -u
 
 # Default locations for theme and configuration files
-version=v1.5.1
+version="1.6.0"
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
 ltspice_theme_dir=/Users/$(whoami)/.ltspice_themes
 ltspice_theme_file=${ltspice_theme_dir}/themes.ltt
+ltspice_version_file=${ltspice_theme_dir}/version
+ltspice_theme_file_new=${ltspice_theme_dir}/themes.ltt.NEW
 copied_plist_file=/tmp/com.analog.LTspice.App.plist
 
 # Print error messages in red
 red="\033[31m"
+magenta="\033[35m"
+yellow="\033[33m"
 default="\033[39m"
 
 # Format error message
@@ -48,53 +52,131 @@ errlog() {
     printf "$default\n"
 }
 
+# Format error message
+warnlog() {
+    printf "${yellow}Warning: "
+    printf "$@"
+    printf "$default\n"
+}
+
 # Format info message
 infolog() {
-    [[ ${quiet_flag} -eq 0 ]] && printf "$@"
+    [[ ${quiet_flag} -eq 0 ]] && printf "$@" && printf "\n"
+}
+
+# Check that the system have the expected bash version and warn otherwise
+chk_bash_version() {
+    declare supported_version="3.2.57(1)-releas"
+    if [ "${supported_version}" != "${BASH_VERSION}" ]; then
+        warnlog "Non-supported BASH version found ${BASH_VERSION}"
+        return 1
+    fi
+    return 0
+}
+
+# Check if an older version is already installed by reading the
+# version file in the theme directory.
+# Return 1 if the current version is newer than the one already installed,
+# return 0 otherwise
+chk_new_version() {
+    local maj min p curr_maj curr_min curr_p
+    if [ ! -f ${ltspice_version_file} ]; then
+        echo ${version} > ${ltspice_version_file}
+        return 1
+    else
+        # IF="." && cat ${ltspice_version_file} | read  maj min p
+        #while IFS= read -r versionline; do
+        #    echo "Read line: $versionline"
+        #    IFS="." &&  read  maj min p <<< "${versionline}"
+        #done<${ltspice_version_file}
+        OIFS=$IFS
+        #echo "Reading from: $ltspice_version_file"
+        IFS="." &&  read maj min p < "${ltspice_version_file}"
+        #echo "EXISTING: $maj $min $p"
+
+        IFS="." &&  read curr_maj curr_min curr_p <<< "${version}"
+        #echo "NEW: $curr_maj $curr_min $curr_p"
+        IFS=$OIFS
+
+        if [ $curr_maj -gt $maj ]; then
+            return 1
+        elif [ $curr_min -gt $min ]; then
+            return 1
+        elif [ $curr_p -gt $p ]; then
+            return 1
+        fi
+    fi
+    return 0
 }
 
 # Make sure the theme directory and a default theme file exists
 init_theme_dir() {
     if [[ ! -d ${ltspice_theme_dir} ]]; then
-        echo "Creating local theme dir: " ${ltspice_theme_dir}
+        infolog "Creating local theme dir: ${ltspice_theme_dir}"
         mkdir ${ltspice_theme_dir}
     fi
+}
 
-    if [[ ! -f ${ltspice_theme_file} ]]; then
-        # Initialize the theme file with the default LTSpice theme.
-        # Use the following command to get the encoded version into the paste buffer
-        # when theme is updated. Then do a CMD-V to past into this file.
-        # cat themes.ltt|bzip2|base64 -b60|pbcopy
-        cat <<NEWHEMEFILE | base64 -d | bzcat >${ltspice_theme_file}
-QlpoOTFBWSZTWQDE2bQABiFfgAAQAAP/8iqlDIo/79/AUAYeG7aAAAAGHA6C
-pRIZTak3ip+giPTQ00g9TTNQJKanoU/VJ6RoYAQxGRtT0ASaVKeUAAekyAAA
-AxjIZDQaDRoA0ADQwSIEEUVGj1AYEyAAHGwtfWB5CPgqBzA5hKOhAj5amwgY
-38kFDCRkOBkMpyyXMQ2Z8XqquHVZ8Wi3etymfMBfMJVVcl5yZcsNNbYG2ljN
-kYpOKSpNG1uUzKJGiiEra2MoTS2MxIUhx1WwonG8l9S/5WyV989ysyK7jdnX
-2x6LzWZTVoQ4pmTYDAM2WY0crs46MMMscG3KtNqxwoY2VEfqMsviVmFqEGGk
-QNEljUiiFWWCqYsWZ2MA6KMDnvQoiMMNVycEJ09IULNFMwzV0hhZFsKK8HJX
-0CRsabSaGMGxi7tkm/YT4xYAWeKUjqE2FAGwyhbGigBgqWtQigGq4w1xYJMC
-QJTC/CFtiQWhYduypTCbI4xtiYNIY2waPPIRnkmy0qOEopykWtnTZYec1hNB
-orgomdC8wNG2jejvN9Ki+Uir1xVpNF3i2uM0so14xpg20mAwWTq2tHeC2iFZ
-F5CedESt0uqthtTBxUrT8RYxbCk8S7CKJ4dTWp2Eq6Xi0NCY0mD1GuGk9RyV
-a4TpUdmZJT13W3JkKgva1ubgqZUhQMKeizg7JPFa54AuBjLDF1tZdyTZJaIV
-qqLV+CtB0PB4vmpCQPIJsoaJ9R42jqsKRrwxaKlYrwijBeBGWrC2s1KdBs89
-APpzlxD77IT6HpEHbJtUeosva9I3DlYOeaK0oXpuFai8byiEcaCGmjZ1WuJp
-AaTQq6rSLLPQCSunmeLTk4NC615awuEjKmkaOJrnKg4bLXnUOwolt2Qagagl
-iTRs6WcTSIhUbFM+AFfHp577BqFEdVLpAi0NQeLLeGeGQ4/pZC8GENdjulRx
-dxcUiVlLRpTtOpSPiT4ANy9ZEHKlvRuGM9KH7NSo8NkL0bBg2MvQuLPVlh4N
-cIQQ68K3t7OqRhtdEHDzp9XwAc/Yq9DiKIPG6o+V8r5NGjRohMss9KnfdLNr
-ikDkcI+WF94XV6a3JBswMNT3ZU5psOLWbDaYQ6MDCcMMIODLMToOKlytzckl
-6gK5eydPNTyzhl0aRi6noxDN07q6JlUtFHM7zK3bTRiXT6AfoAkP5wnDhDUJ
-hAsEFERGCCixjGIDWkYlCjEo1iDSJSIWhbBLSyxGoMKIwYgqDERIwREQSMRQ
-SMEER9Q4UGTSBDUAciAQPCgkm7R4X06a6fzdjWxRbgz44MeAifb9BJZ8S3ph
-5abM3uiJ0ESs5z2FWgZY67vyI+9eDv+RJLuO/H+wiaN73EbMuWPxZ3vPbm30
-zET6dfTlLJETq2D01U5f4XWCN1ZvEdguvyba/VVlrtEZwQacqzZCJXV1GVed
-/yEFJeEF4jQpOzWJIYOPUY6d07RhqR3dAjLagRijlOXBlaAhYwJgIsARhVYl
-9JtWrrRQJPC6vMf8XckU4UJAAxNm0A==
+# Update existing or add a new theme file as needed
+init_theme_file() {
+    # Initialize the theme file with the default LTSpice theme.
+    # Use the following command to get the encoded version into the paste buffer
+    # when theme is updated. Then do a CMD-V to past into this file.
+    # cat themes.ltt|bzip2|base64 -b60|pbcopy
+    cat <<NEWHEMEFILE | base64 -d | bzcat >${ltspice_theme_file_new}
+QlpoOTFBWSZTWaCBGuYABidfgAAQAAP/8iqlDIo/79/AUAYZ52wAAAAIcACp
+U0mmCSeyp+ghMRtT1Gj1MNIRoijRkwJiNMCZMJk9JgSaUhSMZTBkAmTEwExM
+YyGQ0Gg0aANAA0MEiBBFTVDGoAAwAgfmDDOXpA3sQ1GVHFHFku6FIa2YzCiL
+rKZCGBK0Spk4TDi1TTVnuZZZ1yy01Wi3etymfEBfMJVVcl5yZcsNNbYG2ljN
+kYpOKSpNG1uUzKJGiiEra2MoTQ6EiEYIyWSw0ouYWSOCw/x9jDGcvYVGNMNP
+A+IT41zYU59qHBNhMgwGxlmdHS7me3GNM8NulafiE4UMbKiPmZZfErMLUIMN
+IgaJLGpFzi096UEr9tQbKRkBR9OGI53kaovhxUqzihZopmGaukMLIthRXg5K
++oJGxptJoYwbGLu2Sb9hPjFgBZ4pSOoTYUAbDKFsaKAGCpa1CKAarjDXFgkw
+JAlMJvwlbYkHz0hYeZhUphOEdY2xMGkMbYNHvsIz2TZaVHCUU5SLT2eGyw95
+mE0GiuCiZ0LzA0baN6O830qL5SKvXFWk0XeLa4zSyjXjGmDbSYDBZOra0d4L
+aIVkXkJ50RK3S6q2G1MHFStPxFjFsKTxLsIonh1NanYSrpeLQ0JjSYPUa4aT
+1HJVrhOlR2ZklPXdbcmQqC9rW5uCplSFAwp6LODsk8VrngC4GNWGLray7kmy
+S0QrVVavwVoOh4PF+qpCQPIJsoaJ9R42jqsKRrwxaKlYrwijBeBGWrC2s1Kd
+Bs89AJ+fOZEPvshPoekQbsm1R6iy9r0jcOVg55orShem4VqLxvKIRxoIaaNn
+Va4mCDSaFXVaRZZ6ASV08zxacnBoXWvLWFwCyppGjia5yoOGy151DsKJbdkG
+oGoJaSaNnSziYKIVGxTPgBXy9PPfYNQojqpdIEWhqDxZbwzwyHH3WQvBhDXY
+7pUcXcXFIlZS0aU7TqUj5SfIA3L1kQcqW9G4Yz0ofs1Kjw2QvRsGDYy9C4s9
+WWHg1whBDrwre3s6pGG10QcPOn0fIA5+5V6HEUQeN1R8L4XwaNGjRCZZZ6VO
++6WbXFIHI4R8ML7wur01uSDZgYanuypzTYcWs2G0wh0YFYVhOEHBlmJ0HFS5
+W5uSS9QFcvZOnmp5Zwy6NIxdT0Yhm6d1dEyqWijmd5lbtpoxLp8wPpAkPthO
+HCGoiFFggoiIwQUWMYxAa0jEoUYlGsQaRKRC0LYJaWWI1BhRGDEFQYiJGCIi
+CRiKCRggiPkH6QZOcCG0A4kBDlVIkYVEnCzu2dKY0/3DKlapbk08smfgInf/
+Akr95b02/eyvR6oidBEpOc/Qo1DPLC70EeFPF2/Akl3jxy9oRNXF6iN2fLL3
+r7X436ONWgidnXz5SuRE6tw89dXL5F1YjhScRF4uxzb6fVRnhaI0ggszpN0I
+lNfUZ054/AQVTEIMRGpVL8BJDa8uoys4TYNutf86oRv2Qjsv9LKvzSbBEyFg
+isRhLb5jVN61daKgk7rqcx/xdyRThQkKCBGuYA==
 NEWHEMEFILE
-        echo "" >>${ltspice_theme_file}
-    fi
+   # echo "" >>${ltspice_theme_file_new}
+     if [[ ! -f ${ltspice_theme_file} ]]; then
+        # Nothing exists since before so just install it
+        mv ${ltspice_theme_file_new} ${ltspice_theme_file}
+     else
+        # There is  previous version so we merge the new theme file with the old
+        # if necessary
+        declare diff_filename="diff.txt"
+        cd ${ltspice_theme_dir}
+        diff "${ltspice_theme_file_new}" "${ltspice_theme_file}" > "${diff_filename}"
+        if [  -s "${diff_filename}" ]; then
+            # There is a difference so patch
+            patch -b ${ltspice_theme_file} diff.txt
+            if [ $? -eq 0 ]; then
+                infolog "Patched old themefile with updates. Original theme file in *.orig"
+            else
+                errlog "Patching existing theme file failed! Original file in *.orig\n"
+                return 1
+            fi
+        else
+            infolog "Theme files are identical. No update necessary."
+        fi
+        rm "${ltspice_theme_file_new}"
+        rm "${diff_filename}"
+     fi
+     return 0
 }
 
 # Dump the current configuration in the plist file as new named theme
@@ -347,16 +429,17 @@ list_themes() {
     if [[ $# -eq 2 ]]; then
         check_name=1
     fi
+
     if [[ ! -f $1 ]]; then
         errlog "Can not find theme file '%s'." $1
         exit 1
     fi
 
-    [[ $# -eq 1 ]] && infolog "Listing themes in '%s'\n" $1
+    [[ $# -eq 1 ]] && infolog "Listing themes in '%s'" $1
     while read -r line; do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
             if [[ ${check_name} -eq 0 ]]; then
-                infolog "%2d. %s\n" $n ${BASH_REMATCH[1]}
+                infolog "%2d. %s" $n ${BASH_REMATCH[1]}
             else
                 if [[ ${BASH_REMATCH[1]} == $2 ]]; then
                     return 1
@@ -418,6 +501,7 @@ usage() {
 #
 # Main script entry. Parse arguments and kick it off
 #
+
 declare -i OPTIND=0
 declare -i dump_flag=0
 declare -i list_flag=0
@@ -426,6 +510,9 @@ declare -i yes_flag=0
 declare -i quiet_flag=0
 declare -i verbose_flag=0
 declare theme_name=""
+
+# Give warning if user have a non-supported bash version
+chk_bash_version
 
 while [[ $OPTIND -le "$#" ]]; do
     if getopts f:pdlhqvxyV option; then
@@ -474,13 +561,25 @@ while [[ $OPTIND -le "$#" ]]; do
     fi
 done
 
+# Check and create a local theme dir as necesary
 init_theme_dir
+
+# Check if this is a newer version or it has never been installed
+chk_new_version
+if [ $? -eq 1 ]; then
+    infolog "Existing Installation is older and theme file will be updated to v${version}"
+    init_theme_file
+    if [ $? -eq 0 ]; then
+        echo "${version}" > "${ltspice_version_file}"
+        infolog "Updated to v${version}\n"
+    fi
+fi
 
 if [[ $list_flag -eq 1 ]]; then
     if [[ ! -z ${theme_name} ]]; then
-        list_themes ${ltspice_theme_file} ${theme_name}
+        list_themes "${ltspice_theme_file}" "${theme_name}"
         if [[ $? -eq 1 ]]; then
-            infolog "Theme '${theme_name}' exists in '${ltspice_theme_file}'\n"
+            infolog "Theme '${theme_name}' exists in '${ltspice_theme_file}'"
         else
             errlog "Theme '${theme_name}' DOESN'T exists in '${ltspice_theme_file}'"
         fi
