@@ -18,14 +18,19 @@ in the future via Homebrew update function.
 
 Alternativly you can manually just copy `themeltspice.sh` to a directory of your choice.
 
+>**Note:** This shell script is written as a bash shellscript and it will invoke the
+system default bash on OSX. In OSX 12.4 this is a very old version of 
+bash **`(3.2.57(1)-release)`**. Nevertheless this is the version the script is tested with. 
+If a newer version of `bash` is installed a warning will be shown when you run the script.  
+It may or may not work and most likely it will work just fine but it is an unsupported configuration. 
 
 ## Usage
 
 1. To list available themes run:  
 ```$ themeltspice.sh -l```  
 
-2. To use a new theme with **LTSpice**, say '```darcula```', run:  
-```$ themeltspice.sh darcula```
+2. To use a new theme with **LTSpice**, say '```dracula```', run:  
+```$ themeltspice.sh dracula```
 
 When you now run **LTSpice** you will see that the color palette has changed. You can see [examples of all available themes](#theme-reference-screenshots) as well. 
 
@@ -482,9 +487,9 @@ For the above reason it is not possible to copy themes directly between the Wind
 
 <div class="page"/>
 
-## 2. Theme: "darcula"
+## 2. Theme: "dracula"
 
-![darcult theme](screenshots/darcula.png)
+![darcult theme](screenshots/dracula.png)
 
 ## 3. Theme: "sakabug"
 
