@@ -66,7 +66,7 @@ infolog() {
 
 # Check that the system have the expected bash version and warn otherwise
 chk_bash_version() {
-    declare supported_version="3.2.57(1)-releas"
+    declare supported_version="3.2.57(1)-release"
     if [ "${supported_version}" != "${BASH_VERSION}" ]; then
         warnlog "Non-supported BASH version found ${BASH_VERSION}"
         return 1
