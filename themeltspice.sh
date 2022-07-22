@@ -52,7 +52,7 @@ errlog() {
     printf "$default\n"
 }
 
-# Format error message
+# Format warning message
 warnlog() {
     printf "${yellow}Warning: "
     printf "$@"
@@ -63,6 +63,13 @@ warnlog() {
 infolog() {
     [[ ${quiet_flag} -eq 0 ]] && printf "$@" && printf "\n"
 }
+
+# Format info message
+verboselog() {
+    [[ ${verbose_flag} -eq 1 ]] && printf "$@" && printf "\n"
+}
+
+
 
 # Check that the system have the expected bash version and warn otherwise
 chk_bash_version() {
@@ -84,25 +91,19 @@ chk_new_version() {
         echo ${version} > ${ltspice_version_file}
         return 1
     else
-        # IF="." && cat ${ltspice_version_file} | read  maj min p
-        #while IFS= read -r versionline; do
-        #    echo "Read line: $versionline"
-        #    IFS="." &&  read  maj min p <<< "${versionline}"
-        #done<${ltspice_version_file}
         OIFS=$IFS
-        #echo "Reading from: $ltspice_version_file"
         IFS="." &&  read maj min p < "${ltspice_version_file}"
-        #echo "EXISTING: $maj $min $p"
-
         IFS="." &&  read curr_maj curr_min curr_p <<< "${version}"
-        #echo "NEW: $curr_maj $curr_min $curr_p"
         IFS=$OIFS
 
         if [ $curr_maj -gt $maj ]; then
+            verboselog "Upgrading v${maj}.${min}.${p} -> v${version}"
             return 1
         elif [ $curr_min -gt $min ]; then
+            verboselog "Upgrading v${maj}.${min}.${p} -> v${version}"
             return 1
         elif [ $curr_p -gt $p ]; then
+            verboselog "Upgrading v${maj}.${min}.${p} -> v${version}"
             return 1
         fi
     fi
@@ -112,7 +113,7 @@ chk_new_version() {
 # Make sure the theme directory and a default theme file exists
 init_theme_dir() {
     if [[ ! -d ${ltspice_theme_dir} ]]; then
-        infolog "Creating local theme dir: ${ltspice_theme_dir}"
+        verboselog "Creating local theme dir: ${ltspice_theme_dir}"
         mkdir ${ltspice_theme_dir}
     fi
 }
@@ -160,18 +161,18 @@ NEWHEMEFILE
         # if necessary
         declare diff_filename="diff.txt"
         cd ${ltspice_theme_dir}
-        diff "${ltspice_theme_file_new}" "${ltspice_theme_file}" > "${diff_filename}"
+        diff "${ltspice_theme_file}" "${ltspice_theme_file_new}" > "${diff_filename}"
         if [  -s "${diff_filename}" ]; then
             # There is a difference so patch
-            patch -b ${ltspice_theme_file} diff.txt
+            patch -b -s ${ltspice_theme_file} diff.txt
             if [ $? -eq 0 ]; then
-                infolog "Patched old themefile with updates. Original theme file in *.orig"
+                verboselog "Patched old themefile with updates. Original theme file in *.orig"
             else
                 errlog "Patching existing theme file failed! Original file in *.orig\n"
                 return 1
             fi
         else
-            infolog "Theme files are identical. No update necessary."
+            verboselog "Theme files are identical. No update necessary."
         fi
         rm "${ltspice_theme_file_new}"
         rm "${diff_filename}"
@@ -435,7 +436,7 @@ list_themes() {
         exit 1
     fi
 
-    [[ $# -eq 1 ]] && infolog "Listing themes in '%s'" $1
+    [[ $# -eq 1 ]] && verboselog "Listing themes in '%s'" $1
     while read -r line; do
         if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
             if [[ ${check_name} -eq 0 ]]; then
@@ -567,11 +568,11 @@ init_theme_dir
 # Check if this is a newer version or it has never been installed
 chk_new_version
 if [ $? -eq 1 ]; then
-    infolog "Existing Installation is older and theme file will be updated to v${version}"
+    verboselog "Existing Installation is older and theme file will be updated to v${version}"
     init_theme_file
     if [ $? -eq 0 ]; then
         echo "${version}" > "${ltspice_version_file}"
-        infolog "Updated to v${version}\n"
+        verboselog "Updated to v${version}"
     fi
 fi
 
