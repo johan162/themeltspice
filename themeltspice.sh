@@ -152,29 +152,30 @@ r7X436ONWgidnXz5SuRE6tw89dXL5F1YjhScRF4uxzb6fVRnhaI0ggszpN0I
 lNfUZ054/AQVTEIMRGpVL8BJDa8uoys4TYNutf86oRv2Qjsv9LKvzSbBEyFg
 isRhLb5jVN61daKgk7rqcx/xdyRThQkKCBGuYA==
 NEWHEMEFILE
-   # echo "" >>${ltspice_theme_file_new}
      if [[ ! -f ${ltspice_theme_file} ]]; then
         # Nothing exists since before so just install it
         mv ${ltspice_theme_file_new} ${ltspice_theme_file}
      else
-        # There is  previous version so we merge the new theme file with the old
-        # if necessary
-        declare diff_filename="diff.txt"
+        # There is  previous version. Unfortunately there is no
+        # easy way to do a robust update by patching and merging
+        # any new schemas (or deleted) schemas done locally with
+        # updates in the new version. This would require a 3-way merge.
+        # So we do a 80/20 solution  that will be good for 80%
+        # of all users. We copy the original (if different) to a 
+        # backup and write the new file.
         cd ${ltspice_theme_dir}
-        diff "${ltspice_theme_file}" "${ltspice_theme_file_new}" > "${diff_filename}"
+
+        # Step 1: Check if there is a difference
+        declare diff_filename="diff.txt"
+        diff "${ltspice_theme_file_new}" "${ltspice_theme_file}" > "${diff_filename}"
         if [  -s "${diff_filename}" ]; then
-            # There is a difference so patch
-            patch -b -s ${ltspice_theme_file} diff.txt
-            if [ $? -eq 0 ]; then
-                verboselog "Patched old themefile with updates. Original theme file in *.orig"
-            else
-                errlog "Patching existing theme file failed! Original file in *.orig\n"
-                return 1
-            fi
+            # There is a difference so create a backup copy
+            cp "${ltspice_theme_file}" "${ltspice_theme_file}.original"
+            mv "${ltspice_theme_file_new}" "${ltspice_theme_file}"
+            verboselog "Theme file updated. Original theme file saved as ${ltspice_theme_file}.original"
         else
             verboselog "Theme files are identical. No update necessary."
         fi
-        rm "${ltspice_theme_file_new}"
         rm "${diff_filename}"
      fi
      return 0
@@ -542,7 +543,7 @@ while [[ $OPTIND -le "$#" ]]; do
             delete_flag=1
             ;;
         v)
-            infolog "$version\n"
+            infolog "v$version"
             exit 0
             ;;
         V)
