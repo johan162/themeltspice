@@ -14,7 +14,7 @@ $> brew install themeltspice
 ```
 
 This will install `themeltspice.sh` in `/usr/local/bin`, and give you automatic updates
-in the future via Homebrew update function. 
+in the future via Homebrew update/upgrade function. 
 
 Alternativly you can manually just copy `themeltspice.sh` to a directory of your choice.
 
@@ -351,6 +351,21 @@ By combining the '```-x```' option with '```-v```' option (verbose) the script w
 > **Note:** if you want to update (write over) an existing theme you must first delete it. This is done on purpose to avoid unintentional data loss.
 
 <div class="page"/>
+
+
+# Upgrading
+
+|[back to content table](#content)|
+
+If the script is updated either by manually by downloading a new version or via `brew upgrade` the script will also update the themefile. If there is a difference then the existing theme file will be backed up to `themes.ltt.original`. 
+
+Unfortunately there is no easy (and robust) way to merge potential local additions to the theme files with an updated distributed theme file in the new version with anything less than a 3-way merge and it would add a lot of complexity. Very few would need that so the 80/20 rule apply.
+
+If there are local modification they will have to be manually re-applied in the new theme file. An alternative is to send new themes as a suggestion to be included in the official distribution.
+
+
+<div class="page"/>
+
 
 # How the script works
 
