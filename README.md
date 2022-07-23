@@ -41,7 +41,8 @@ That is all there is to it for the most basic use case. Read on if you want to k
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-- [Usage](#usage)
+- [Usage](#usage) 
+- [Upgrading](#upgrading) 
 - [How the script works](#how-the-script-works)
 - [Theme file format](#theme-file-format)
 - [Theme reference screenshots](#theme-reference-screenshots)
@@ -105,7 +106,8 @@ Couldn't it be written in [select favourite language] (e.g. Python). Of course i
 Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
 If you envision a program with more than around ~1000 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
 
-So why not write it as a ```zsh``` script? It would be perfectly fine to convert the few bash:ism used to ```zsh``` (since ```zsh``` even has a "bash" compatibilty mode) and it might very well be a good idea to pursuite.
+>So why not write it as a `zsh` script? Mainly because the author (me) has been
+writing `bash` scripts for a **very** long time and did not right now have the time to learn the (new) ways of `zsh` to do things. Unfortunately the current script does not run directly under `zsh` so it would require some (minor) porting work.
 
 **Related work**
 
@@ -123,10 +125,7 @@ The absolute easiest installation is to use the Homebrew package manager for OSX
 
 ```
 $> brew tap johan162/themeltspice
-...
 $> brew install themeltspice
-...
-$> _
 ```
 
 This will install `themeltspice.sh` in `/usr/local/bin` which you can verify as so:
@@ -134,7 +133,6 @@ This will install `themeltspice.sh` in `/usr/local/bin` which you can verify as 
 ```
 $> which themeltspice.sh
 /usr/local/bin/themeltspice.sh
-$> _
 ```
 
 > **Tip:** Use `alias` to get a shorter command, for exmple adding   
@@ -259,7 +257,10 @@ $> _
 
 This will store the new theme at the end of the existing theme file. If a theme with this name already exsts an error message will be printed informing about this.
 
+
 <div class="page"/>
+
+> **WARNING:** If you update the script (see [Upgrading](#upgrading)) local changes will be overwritten. However, a backup file will be created which will allow you to manually merge any local changes, The reason fior this is described in the [Upgrading](#upgrading) section.
 
 > **WARNING:** You might have to quit and start **LTSpice** twice to force the update of the plist file from the plist cache before running the dump command.  
 You might want to check that changes have been made by printing out the property list using the command:  
