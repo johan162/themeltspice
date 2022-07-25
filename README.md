@@ -16,15 +16,7 @@ $> brew install themeltspice
 This will install `themeltspice.sh` in `/usr/local/bin`, and give you automatic updates
 in the future via Homebrew update/upgrade function. 
 
-Alternativly you can manually copy `themeltspice.sh` to a directory of your choice.
-
->**Note:** This shell script is written as a bash shellscript and it will invoke the
-system default bash on OSX. In OSX 12.4 this is a very old version of 
-bash **`(3.2.57(1)-release)`**. Nevertheless this is the version the script is tested with. 
-If a newer version of `bash` is installed a warning will be shown when you run the script.  
-It may or may not work and most likely it will work just fine but it is an officially unsupported configuration. 
-
-
+Alternatively you can manually copy `themeltspice.sh` to a directory of your choice.
 
 ## Usage
 
@@ -103,15 +95,11 @@ To be fair. The **OSX** version does have some missing functionality but nothing
 3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.  
  
 
-**Why do this as a bash shell script?**
+**Why do this as a zsh script?**
 
-Why oh why was this done as a bash shell script I can hear people cry out. 
-Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, bash is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
-Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
-If you envision a program with more than around ~1000 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
-
->So why not write it as a `zsh` script? Mainly because the author (me) has been
-writing `bash` scripts for a **very** long time and did not right now have the time to learn the (new) ways of `zsh` to do things. Unfortunately the current script does not run directly under `zsh` so it would require some (minor) porting work.
+Why oh why was this done as a zsh shell script I can hear people cry out. 
+Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, `zsh` is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
+Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead, we claim it is perfectly possible to write readable, medium-complex programs using `zsh`. It is of course not without its limitation since `zsh` code can be almost unreadable when one uses all the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
 
 **Related work**
 
