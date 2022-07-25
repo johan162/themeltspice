@@ -145,6 +145,7 @@ NetlistEditorColor2=13007359
 NetlistEditorColor3=3549736
 NetlistEditorColor4=16640395
 
+
 [softdark]
 GridColor=8289918
 InActiveAxisColor=9868950
@@ -155,7 +156,7 @@ WaveColor3=16760064
 WaveColor4=5220095
 WaveColor5=6160383
 WaveColor6=16777215
-WaveColor7=23039
+16777215WaveColor7=23039
 WaveColor8=15663359
 WaveColor9=16776960
 WaveColor10=2514069
@@ -180,6 +181,7 @@ NetlistEditorColor1=32512
 NetlistEditorColor2=16711680
 NetlistEditorColor3=155
 NetlistEditorColor4=16777215
+
 
 [blackwhite]
 GridColor=9211020
@@ -216,6 +218,7 @@ NetlistEditorColor1=32512
 NetlistEditorColor2=16711680
 NetlistEditorColor3=155
 NetlistEditorColor4=16777215
+
 
 [redblack]
 GridColor=9211020
@@ -284,6 +287,43 @@ SchematicColor9=16711680
 SchematicColor10=65535
 SchematicColor11=6250335
 SchematicColor12=3947580
+NetlistEditorColor0=0
+NetlistEditorColor1=32512
+NetlistEditorColor2=16711680
+NetlistEditorColor3=155
+NetlistEditorColor4=16777215
+
+
+[blackred]
+GridColor=9211020
+InActiveAxisColor=9868950
+WaveColor0=16777215
+WaveColor1=1973790
+WaveColor2=0
+WaveColor3=3947580
+WaveColor4=6579300
+WaveColor5=9868950
+WaveColor6=0
+WaveColor7=0
+WaveColor8=0
+WaveColor9=0
+WaveColor10=0
+WaveColor11=0
+WaveColor12=0
+WaveColor13=0
+SchematicColor0=0
+SchematicColor1=0
+SchematicColor2=0
+SchematicColor3=0
+SchematicColor4=14474460
+SchematicColor5=135
+SchematicColor6=0
+SchematicColor7=7895160
+SchematicColor8=8553090
+SchematicColor9=0
+SchematicColor10=0
+SchematicColor11=13158600
+SchematicColor12=16777215
 NetlistEditorColor0=0
 NetlistEditorColor1=32512
 NetlistEditorColor2=16711680

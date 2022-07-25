@@ -6,7 +6,7 @@
 
 # Quickstart &lt;TL;DR>
 
-The absolute easiest installation is to use the Homebrew package manager for OSX. 
+The absolute easiest installation is to use the [Homebrew package manager](https://brew.sh/) for OSX. 
 
 ```
 $> brew tap johan162/themeltspice
@@ -16,13 +16,15 @@ $> brew install themeltspice
 This will install `themeltspice.sh` in `/usr/local/bin`, and give you automatic updates
 in the future via Homebrew update/upgrade function. 
 
-Alternativly you can manually just copy `themeltspice.sh` to a directory of your choice.
+Alternativly you can manually copy `themeltspice.sh` to a directory of your choice.
 
 >**Note:** This shell script is written as a bash shellscript and it will invoke the
 system default bash on OSX. In OSX 12.4 this is a very old version of 
 bash **`(3.2.57(1)-release)`**. Nevertheless this is the version the script is tested with. 
 If a newer version of `bash` is installed a warning will be shown when you run the script.  
-It may or may not work and most likely it will work just fine but it is an unsupported configuration. 
+It may or may not work and most likely it will work just fine but it is an officially unsupported configuration. 
+
+
 
 ## Usage
 
@@ -36,6 +38,7 @@ When you now run **LTSpice** you will see that the color palette has changed. Yo
 
 That is all there is to it for the most basic use case. Read on if you want to know more!
 
+&nbsp;
 
 # Content
 
@@ -48,6 +51,7 @@ That is all there is to it for the most basic use case. Read on if you want to k
 - [Theme reference screenshots](#theme-reference-screenshots)
 
 <div class="page"/>
+&nbsp;
 
 # Introduction
 |[back to content table](#content)|
@@ -114,6 +118,7 @@ writing `bash` scripts for a **very** long time and did not right now have the t
 The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the **OSX** world. That state of affairs cannot stand and has now been corrected!
 
 <div class="page"/>
+&nbsp;
 
 # Installation
 
@@ -178,6 +183,7 @@ You can easily check if the new theme have been added correctly by listing the t
 *(However, it is not terrible hard to manually fix those few differences and then copy a theme definition as hinted in the section "[Theme file format](#theme-file-format)")*
 
 <div class="page"/>
+&nbsp;
 
 # Usage
 
@@ -259,13 +265,17 @@ This will store the new theme at the end of the existing theme file. If a theme 
 
 
 <div class="page"/>
+&nbsp;
 
-> **WARNING:** If you update the script (see [Upgrading](#upgrading)) local changes will be overwritten. However, a backup file will be created which will allow you to manually merge any local changes, The reason fior this is described in the [Upgrading](#upgrading) section.
+> **WARNING:** If you update the script (see [Upgrading](#upgrading)) local changes will be overwritten. However, a backup file will be created which will allow you to manually merge any local changes into the newly created theme file.
+
+&nbsp;
 
 > **WARNING:** You might have to quit and start **LTSpice** twice to force the update of the plist file from the plist cache before running the dump command.  
 You might want to check that changes have been made by printing out the property list using the command:  
 ```$ themeltspice.sh -p```" (See [Printing all settings](#printing-all-settings-stored-in-the-config-file))
 
+&nbsp;
 
 ## Listing all themes available
 
@@ -282,7 +292,6 @@ Listing themes in '/Users/<USER>/.ltspice_themes/themes.txt''
  6. blackwhite
  7. redblack
  8. bbking
-$> _
 ```
 
 ### Checking if a named theme exists
@@ -292,7 +301,6 @@ Use the '```-l```' option with a theme name
 ```
 $> themeltspice.sh -l mytheme
 *** ERROR *** Theme 'mytheme' DOESN'T exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
-$> _
 ```
 
 or
@@ -300,7 +308,6 @@ or
 ```
 $> themeltspice.sh -l default
 Theme 'default' exists in '/Users/<USER>/.ltspice_themes/themes.ltt'
-$> _
 ```
 
 <div class="page"/>
@@ -335,14 +342,12 @@ Are you sure you wish to delete theme 'softdark' in '/Users/ljp/.ltspice_themes/
 2) No
 #? 1
 Theme 'softdark' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
-$> _
 ```
 As a safety precaution the deletion of a theme have to be confirmed by an interactive question. To avoid this question and delete directly (perhaps in a script) add the '```-y```' option as so:
 
 ```
 $> themeltspice.sh -xy softdark
 Theme 'softdark' have been deleted from '/Users/<USER>/.ltspice_themes/themes.ltt'
-$> _
 ```
 
 A one-level backup file is always created with the name '```themes.ltt.BAK```' in the themes directory.
@@ -358,9 +363,9 @@ By combining the '```-x```' option with '```-v```' option (verbose) the script w
 
 |[back to content table](#content)|
 
-If the script is updated either by manually by downloading a new version or via `brew upgrade` the script will also update the themefile. If there is a difference then the existing theme file will be backed up to `themes.ltt.original`. 
+If the script is updated either by manually by downloading a new version or via `brew upgrade` the script will also update the theme file. If there is a difference then the existing theme file will be backed up to `themes.ltt.original`. 
 
-Unfortunately there is no easy (and robust) way to merge potential local additions to the theme files with an updated distributed theme file in the new version with anything less than a 3-way merge and it would add a lot of complexity. Very few would need that so the 80/20 rule apply.
+Unfortunately there is no easy (and robust) way to merge potential local additions/deletions to the theme file with an updated distributed theme file in the new version. Thisa would require a 3-way merge and it would add a lot of complexity. Very few would need that so the 80/20 rule apply.
 
 If there are local modification they will have to be manually re-applied in the new theme file. An alternative is to send new themes as a suggestion to be included in the official distribution.
 
@@ -460,7 +465,7 @@ NetlistEditorColor4)
 <div class="page"/>
 
 ## BNF Grammar
-The BNF grammar for the theme file is extremely simple and is shown in Figure 2. below
+The BNF grammar for the theme file is simple and is shown in Figure 2. below
 
 ```
 themes        ::= theme | theme <EMPTY_LINE> themes
@@ -481,15 +486,15 @@ digits        ::= "0" | "1" | ...
 Unfortunately there are a couple differences between the Window and **OSX** version of **LTSpice**. 
 These changes also impact the theme files in the following three ways:
 
-1. **OSX** uses the name "```GridColor```" while the windows version simply call it "```Grid```".  
+1. **OSX** uses the name "```GridColor```" while the windows version call it "```Grid```".  
 
-2. **OSX** uses the name "```InActiveAxisColor```" while the windows version simply call it "```InActiveAxis```".   
+2. **OSX** uses the name "```InActiveAxisColor```" while the windows version  call it "```InActiveAxis```".   
 
 3. The window version have one additional schematic color setting which is the *"Graphic Annotation"* color which does not exist in the **OSX** version. This means that the window version have schematic colors 0-13 and the **OSX** version 0-12. In practice this means that the color "```SchematicColor13```" (which is the graphic annotation color) doesn't exist in the **OSX** version.  
 
 For the above reason it is not possible to copy themes directly between the Window and **OSX** version of **LTSpice** without manual conversion adressing the issues above. 
 
-
+&nbsp;
 
 <div class="page"/>
 
@@ -505,7 +510,7 @@ For the above reason it is not possible to copy themes directly between the Wind
 
 ## 2. Theme: "dracula"
 
-![darcult theme](screenshots/dracula.png)
+![darcult theme](screenshots/darcula.png)
 
 ## 3. Theme: "sakabug"
 
