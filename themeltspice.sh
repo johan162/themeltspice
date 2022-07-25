@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 #=======================================================================
 # Name: themeltspice.sh
 # Description: Set and create the color theme for OSX version of LTSpice
@@ -31,7 +31,7 @@
 set -u
 
 # Default locations for theme and configuration files
-version="1.6.0"
+version="2.0.0"
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
 ltspice_theme_dir=/Users/$(whoami)/.ltspice_themes
 ltspice_theme_file=${ltspice_theme_dir}/themes.ltt
@@ -39,7 +39,7 @@ ltspice_version_file=${ltspice_theme_dir}/version
 ltspice_theme_file_new=${ltspice_theme_dir}/themes.ltt.NEW
 copied_plist_file=/tmp/com.analog.LTspice.App.plist
 
-# Print error messages in red
+# Color for use in notice, warning messages etc.
 red="\033[31m"
 magenta="\033[35m"
 yellow="\033[33m"
@@ -47,14 +47,14 @@ default="\033[39m"
 
 # Format error message
 errlog() {
-    printf "$red*** ERROR *** "
+    printf "${red}ERROR: "
     printf "$@"
     printf "$default\n"
 }
 
-# Format warning message
-warnlog() {
-    printf "${yellow}Warning: "
+# Format notice message
+noticelog() {
+    printf "${yellow}Notice: "
     printf "$@"
     printf "$default\n"
 }
@@ -69,25 +69,14 @@ verboselog() {
     [[ ${verbose_flag} -eq 1 ]] && printf "$@" && printf "\n"
 }
 
-
-
-# Check that the system have the expected bash version and warn otherwise
-chk_bash_version() {
-    declare supported_version="3.2.57(1)-release"
-    if [ "${supported_version}" != "${BASH_VERSION}" ]; then
-        warnlog "Non-supported BASH version found ${BASH_VERSION}"
-        return 1
-    fi
-    return 0
-}
-
 # Check if an older version is already installed by reading the
 # version file in the theme directory.
 # Return 1 if the current version is newer than the one already installed,
 # return 0 otherwise
-chk_new_version() {
+chk_if_new_version() {
     local maj min p curr_maj curr_min curr_p
     if [ ! -f ${ltspice_version_file} ]; then
+        # This is a very old version that doesn't even have a "version" file
         echo ${version} > ${ltspice_version_file}
         return 1
     else
@@ -106,6 +95,7 @@ chk_new_version() {
             verboselog "Upgrading v${maj}.${min}.${p} -> v${version}"
             return 1
         fi
+        verboselog "Existing version is up to date."
     fi
     return 0
 }
@@ -115,6 +105,8 @@ init_theme_dir() {
     if [[ ! -d ${ltspice_theme_dir} ]]; then
         verboselog "Creating local theme dir: ${ltspice_theme_dir}"
         mkdir ${ltspice_theme_dir}
+    else
+        verboselog "Directory \"${ltspice_theme_dir}\" exists."
     fi
 }
 
@@ -124,34 +116,35 @@ init_theme_file() {
     # Use the following command to get the encoded version into the paste buffer
     # when theme is updated. Then do a CMD-V to past into this file.
     # cat themes.ltt|bzip2|base64 -b60|pbcopy
-    cat <<NEWHEMEFILE | base64 -d | bzcat >${ltspice_theme_file_new}
-QlpoOTFBWSZTWaCBGuYABidfgAAQAAP/8iqlDIo/79/AUAYZ52wAAAAIcACp
-U0mmCSeyp+ghMRtT1Gj1MNIRoijRkwJiNMCZMJk9JgSaUhSMZTBkAmTEwExM
-YyGQ0Gg0aANAA0MEiBBFTVDGoAAwAgfmDDOXpA3sQ1GVHFHFku6FIa2YzCiL
-rKZCGBK0Spk4TDi1TTVnuZZZ1yy01Wi3etymfEBfMJVVcl5yZcsNNbYG2ljN
-kYpOKSpNG1uUzKJGiiEra2MoTQ6EiEYIyWSw0ouYWSOCw/x9jDGcvYVGNMNP
-A+IT41zYU59qHBNhMgwGxlmdHS7me3GNM8NulafiE4UMbKiPmZZfErMLUIMN
-IgaJLGpFzi096UEr9tQbKRkBR9OGI53kaovhxUqzihZopmGaukMLIthRXg5K
-+oJGxptJoYwbGLu2Sb9hPjFgBZ4pSOoTYUAbDKFsaKAGCpa1CKAarjDXFgkw
-JAlMJvwlbYkHz0hYeZhUphOEdY2xMGkMbYNHvsIz2TZaVHCUU5SLT2eGyw95
-mE0GiuCiZ0LzA0baN6O830qL5SKvXFWk0XeLa4zSyjXjGmDbSYDBZOra0d4L
-aIVkXkJ50RK3S6q2G1MHFStPxFjFsKTxLsIonh1NanYSrpeLQ0JjSYPUa4aT
-1HJVrhOlR2ZklPXdbcmQqC9rW5uCplSFAwp6LODsk8VrngC4GNWGLray7kmy
-S0QrVVavwVoOh4PF+qpCQPIJsoaJ9R42jqsKRrwxaKlYrwijBeBGWrC2s1Kd
-Bs89AJ+fOZEPvshPoekQbsm1R6iy9r0jcOVg55orShem4VqLxvKIRxoIaaNn
-Va4mCDSaFXVaRZZ6ASV08zxacnBoXWvLWFwCyppGjia5yoOGy151DsKJbdkG
-oGoJaSaNnSziYKIVGxTPgBXy9PPfYNQojqpdIEWhqDxZbwzwyHH3WQvBhDXY
-7pUcXcXFIlZS0aU7TqUj5SfIA3L1kQcqW9G4Yz0ofs1Kjw2QvRsGDYy9C4s9
-WWHg1whBDrwre3s6pGG10QcPOn0fIA5+5V6HEUQeN1R8L4XwaNGjRCZZZ6VO
-+6WbXFIHI4R8ML7wur01uSDZgYanuypzTYcWs2G0wh0YFYVhOEHBlmJ0HFS5
-W5uSS9QFcvZOnmp5Zwy6NIxdT0Yhm6d1dEyqWijmd5lbtpoxLp8wPpAkPthO
-HCGoiFFggoiIwQUWMYxAa0jEoUYlGsQaRKRC0LYJaWWI1BhRGDEFQYiJGCIi
-CRiKCRggiPkH6QZOcCG0A4kBDlVIkYVEnCzu2dKY0/3DKlapbk08smfgInf/
-Akr95b02/eyvR6oidBEpOc/Qo1DPLC70EeFPF2/Akl3jxy9oRNXF6iN2fLL3
-r7X436ONWgidnXz5SuRE6tw89dXL5F1YjhScRF4uxzb6fVRnhaI0ggszpN0I
-lNfUZ054/AQVTEIMRGpVL8BJDa8uoys4TYNutf86oRv2Qjsv9LKvzSbBEyFg
-isRhLb5jVN61daKgk7rqcx/xdyRThQkKCBGuYA==
-NEWHEMEFILE
+    cat <<NEWTHEMEFILE | base64 -d | bzcat >${ltspice_theme_file_new}
+QlpoOTFBWSZTWft+eLIABsHfgAAQAAP/8iqlDIo/79/AYAZe933e954KKPbG
+bNhw8OVCKhCaIzak9MRGmjamjRiaZBJAJqVPSCYTAAExGhhjIZDQaDRoA0AD
+QwSaVDVAAAAAAAAiiE0xKaj9UepoDQGgDQBEpoCalQANAAAA0YSGILPrQ1I9
+haSCkkUkCcpKnSGlkmIu2WZiGQytErM8qGTlasxtaameelGZvuoVNWcgGO+4
+TWuQpmoVXsQ0MLGXGQbgGY7LZaeNF6dG3dMM3aYlywGI7IajCG5MsDDUq3o7
+NSdB74/UcQ+Hhb4NOrz+ueDwiWOhuYmy+CTbhoSSXQCLTFhVHJTC+RcaZDaY
+rZq0GyoszteKY0NNYDEwaSgrWIdMKFSZQg3Vg3MTqF5pc4Si3CTx2rRvWvkl
+aapU3qdXhLFl5UoYKHpglv0lF/jSmEYyARIQJCD5uFG/VgnIORDB0KU8FkC4
+htM3HZEuIQW7rVkuhG/ImuOUCAUhQQMHSzuCJgXJ5jBemBWG3CMkGJEYSQIn
+e2HPaNmALnChvKFw7PDZgO81kq4aJ0TxGC71ow4yOYdbzol62UTWapxMiqt2
+8hpzc10jAgSQCIQHNaxHR5xdpZw2xmwTPilO7vjfYbazRxw5Z1MkHIXZlfLJ
+drh4x1W0pxd66YrCAQJp80xNj7CpaRik6iIITZ1nGhW4SFcWcirN6ppLpAvN
+GDhMFHXDzqjwMwMJl8kc4xTWCnCWcN7mHHRwp4HSZfdvSUB2xRguRK9J2QfH
+CXTXXLovTlxktcyuknawWC0O16MVDc1wIdcYtMxnigU4DglnOiiSlJ2RRXF2
+H47QrGjcJxOuxx1SesyZuWTkEtGJs8cPGKhpgt/HCODB6EKL+Hc9dSjhBfI9
+w5MWFzerpo4wOcvZ4bMPfEmEuVJMFjViNiogRNnhYwwLJLV3WlNCFezg1xxJ
+eWZy1ckqWSGXTtaNjbRtMT9bEuiAmHM5u1cOdnAUAKJWGKOJphC7iDuEHIbL
+dzZhmw47DHZuz1V6bdNln0yBAkIY0vHPpzhOkeFlLQv0vvc2eNMDb4CcO+Hw
+e4Ic+Zv6Tg1ZdQQVKvR6B0Lt27dlhs2eGtN83dt3DQDX0fvsFdaVNYMs5JCg
+tFmR1wmLxmRqy+BxMDtJaLUWrLTmjFFppRqlbPIqCFWOE7XCMa8jaNLqTEWu
+k2K0McJapqSIUrFK2+tueUyZFgdLyIP4QQj6jpnZyMsYWLBBRiIkQWLEGMYC
+VpGMsKMZY1jBpEpGFsLYJbLLGNYMKMYMYKwQYiRgxEYMjEUEBIgiPoG4wQOW
+EhsEPKAgJjBUAvo2eEOWbNHnfOMiDXYW7pmXaiL5/Yqsurk5We1Mi06Ki8kR
+YhwflCJQhXpnGviinpHaa/5UAr3YE/0UWjA6Ipq04z6y1nvdaYQtRFz9t+LI
+BXsakN9UMe6FckU7ZfOimEN9cnmk8hLzm6KeVQULcy9RRZ2/qHM9+v4IKEOh
+BQ0ilSHGVVEsLd3ZDTVe50J1GbvQKl+cVNGXjTD4i+KIvKFkUoimW+HUPaXN
+7oQKr49570P8XckU4UJD7fniyA==
+NEWTHEMEFILE
      if [[ ! -f ${ltspice_theme_file} ]]; then
         # Nothing exists since before so just install it
         mv ${ltspice_theme_file_new} ${ltspice_theme_file}
@@ -165,28 +158,29 @@ NEWHEMEFILE
         # backup and write the new file.
         cd ${ltspice_theme_dir}
 
-        # Step 1: Check if there is a difference
-        declare diff_filename="diff.txt"
+        # Check if there is a difference
+        typeset diff_filename="diff.txt"
         diff "${ltspice_theme_file_new}" "${ltspice_theme_file}" > "${diff_filename}"
         if [  -s "${diff_filename}" ]; then
             # There is a difference so create a backup copy
-            cp "${ltspice_theme_file}" "${ltspice_theme_file}.original"
+            cp "${ltspice_theme_file}" "${ltspice_theme_file}.BACKUP"
             mv "${ltspice_theme_file_new}" "${ltspice_theme_file}"
-            verboselog "Theme file updated. Original theme file saved as ${ltspice_theme_file}.original"
+            noticelog "Theme file updated. Original theme file saved as ${ltspice_theme_file}.BACKUP"
         else
-            verboselog "Theme files are identical. No update necessary."
+            noticelog "Theme files are identical. No backup necessary."
         fi
         rm "${diff_filename}"
      fi
+
      return 0
 }
 
 # Dump the current configuration in the plist file as new named theme
 # Arg 1: theme name
 # Arg 2: theme file to dump values to
-# Arg 3: plst file
+# Arg 3: plist file
 dump_current_theme() {
-    declare -a fields
+    typeset -a fields
     fields=(GridColor
         InActiveAxisColor
         WaveColor0
@@ -222,22 +216,25 @@ dump_current_theme() {
         NetlistEditorColor3
         NetlistEditorColor4)
 
-    declare theme_name=$1
-    declare theme_file=$2
-    declare plist_file=$3
+    typeset theme_name=$1
+    typeset theme_file=$2
+    typeset plist_file=$3
 
-    # If the theme file exist then check that the given theme name deosn't already exist
+    # If the theme file exist then check that the given theme name doesn't already exist
     if [[ -f ${theme_file} ]]; then
-        list_themes ${theme_file} ${theme_name}
-        if [[ $? -eq 1 ]]; then
+        theme_exists ${theme_file} ${theme_name}
+        if [[ $? -eq 0 ]]; then
             errlog "Theme name '${theme_name}' already exist in theme file '${theme_file}'."
             exit 1
         fi
     fi
 
-    infolog "Dumping current color setup from '%s' to '%s' as theme '%s'\n" $3 $2 $1
+    verboselog "Dumping current color setup from '%s' to '%s' as theme '%s'\n" $3 $2 $1
     touch ${theme_file}
 
+    # We don't support using a theme comment when dumping so just leave it blank
+    typeset theme_comment=""
+    echo "${theme_comment}" >>${theme_file}
     echo "[${theme_name}]" >>${theme_file}
 
     for field in ${fields[@]}; do
@@ -248,7 +245,11 @@ dump_current_theme() {
             errlog "Field '${field}' does not exist in plist."
         fi
     done
+
+    # Mark the end of the theme with a blank line
     echo "" >>${theme_file}
+
+    return 0
 
 }
 
@@ -272,33 +273,37 @@ ask_yn() {
 # Arg1: Theme file
 # Arg2: Theme name
 delete_theme() {
-    declare theme_file=$1
-    declare theme_name=$2
-    declare theme_name_regex="\[${theme_name}\]"
-    declare -i lineno=0
-    declare -i start_lineno=0
-    declare -i end_lineno=0
-    declare -i intheme=0
-    declare -i n=0
-    declare prevline=""
+    typeset theme_file=$1
+    typeset theme_name=$2
+    typeset theme_name_regex="\[${theme_name}\]"
+    typeset -i lineno=0
+    typeset -i start_lineno=0
+    typeset -i end_lineno=0
+    typeset -i intheme=0
+    typeset -i n=0
 
     if [[ ! -f ${theme_file} ]]; then
         errlog "Theme file '%s' does not exist." ${theme_file}
         exit 1
     fi
 
-    list_themes "${theme_file}" "${theme_name}"
-    if [[ $? -eq 0 ]]; then
-        errlog "Theme '%s' does not exist." "${theme_name}"
+    theme_exists "${theme_file}" "${theme_name}"
+    if [[ $? -eq 1 ]]; then
+        errlog "Cannot delete non-existant theme '%s'." "${theme_name}"
         exit 1
     fi
 
-    # This gets a bit convoluted since we need to keeptrack also of the immediate
+    if [[ ${theme_name} = "default"  ]]; then
+        errlog "Cannot delete default theme."
+        exit 1
+    fi
+
+    # This gets a bit convoluted since we need to keep track also of the immediate
     # line above the theme name since it could be a reference URL to the theme
     # in order to give credit to the creator of the theme.
     while read -r line; do
         lineno=$((lineno + 1))
-        if [[ ${line} =~ ${theme_name_regex} ]]; then
+        if [[ ${line} =~ "${theme_name_regex}" ]]; then
             if [[ intheme -eq 1 ]]; then
                 errlog "Corrupt theme file near line %d. Cannot delete theme." "${lineno}"
                 exit 1
@@ -307,7 +312,7 @@ delete_theme() {
             start_lineno=$lineno
             end_lineno=$lineno
         elif [[ ${intheme} -eq 1 ]]; then
-            if [[ (-z ${line} || §{line} =~ ${empty}) ]]; then
+            if [[ -z ${line}  ]]; then
                 break
             fi
             n=$((n + 1))
@@ -317,27 +322,18 @@ delete_theme() {
                 exit 1
             fi
         fi
-        # As long as we have not found the theme we record the previous line
-        # in order to check if there is a single line URL to the source of the
-        # specific theme that can optionally exist.
-        [[ ${intheme} -eq 0 ]] && prevline="${line}"
     done <${theme_file}
 
-    # If the line just above the theme name is a text and not a blank line
-    # then we also delete that line (which is a theme comment)
-    [[ ! -z ${prevline} ]] && start_lineno=$((start_lineno - 1))
-
-    # Delete blank line after the theme. We are guaranteed that the line is blank
-    # since finding a blank line is the only way to break out of the loop without
-    # it being a detected error
-    end_lineno=$((end_lineno + 1))
+    # Also delete comment and blank line before.
+    start_lineno=$((start_lineno - 2))
 
     if [[ ${verbose_flag} -eq 1 ]]; then
-        infolog "Deleting line range [${start_lineno},${end_lineno}] in '${theme_file}'.\n\n"
+        infolog "Deleting line range [${start_lineno},${end_lineno}] in '${theme_file}'."
         sed -n "${start_lineno},${end_lineno}p" ${theme_file}
+        echo ""
     fi
 
-    ask_yn "Are you sure you wish to delete theme '${theme_name}' in '${theme_file}'?"
+    ask_yn "Are you sure you wish to delete the above theme '${theme_name}' in '${theme_file}'?"
     if [[ $? -eq 1 ]]; then
         sed -i '.BAK' "${start_lineno},${end_lineno}d" ${theme_file}
         if [[ $? -eq 0 ]]; then
@@ -348,10 +344,12 @@ delete_theme() {
             exit 1
         fi
     else
-        infolog "${red}Theme '${theme_name}' NOT deleted.${default}\n"
+        noticelog "${yellow}Theme '${theme_name}' NOT deleted.${default}\n"
         exit 0
     fi
+
 }
+
 
 # Set a new theme by updating the configuration file in the third argument with the
 # named theme.
@@ -359,11 +357,11 @@ delete_theme() {
 # Arg2: Theme file
 # Arg2: LTSpice configuration (plist) file
 set_theme() {
-    declare theme_name_regex="\[${1}\]"
-    declare theme_file=$2
-    declare -i intheme=0
-    declare -i n=0
-    declare empty='^[[:space:]]*$'
+    typeset theme_name_regex="\[${1}\]"
+    typeset theme_file=$2
+    typeset -i intheme=0
+    typeset -i n=0
+    typeset empty='^[[:space:]]*$'
 
     if [[ ! -f ${theme_file} ]]; then
         errlog "Theme file '%s' does not exist." ${theme_file}
@@ -376,11 +374,11 @@ set_theme() {
         fi
         if [[ ${intheme} -eq 1 && ${n} -le 35 ]]; then
             n=$((n + 1))
-            keypair='^([[:alnum:]]+)=([0-9]+)'
+            keypair="^([[:alnum:]]+)=([0-9]+)"
             [[ ${line} =~ ${keypair} ]]
-            plutil -replace ${BASH_REMATCH[1]} -integer ${BASH_REMATCH[2]} $3
+            plutil -replace ${match[1]} -integer ${match[2]} $3
         fi
-        if [[ ${line} =~ ${theme_name_regex} ]]; then
+        if [[ ${line} =~ "${theme_name_regex}" ]]; then
             intheme=1
         fi
     done <${theme_file}
@@ -388,6 +386,8 @@ set_theme() {
         errlog "Specfied theme '%s' does not exist in theme file '%s'." $1 ${theme_file}
         exit 1
     fi
+
+    return 0
 }
 
 # Do everything needed to update the theme
@@ -395,9 +395,9 @@ set_theme() {
 # Arg2: Theme file
 # Arg3: The copied version of the original LTSpice config file that we modify
 update_theme() {
-    declare theme_name=$1
-    declare theme_file=$2
-    declare copied_ltspice_file=$3
+    typeset theme_name=$1
+    typeset theme_file=$2
+    typeset copied_ltspice_file=$3
 
     # Do the update and check file integrity
     set_theme ${theme_name} ${theme_file} ${copied_ltspice_file}
@@ -417,6 +417,27 @@ update_theme() {
     # Finally we need to reload the plist-cache for the change to take effect
     defaults read ${ltspice_plist_file} >/dev/null
     [[ ! $? -eq 0 ]] && errlog "Failed to reload cache."
+
+    return 0
+}
+
+# Arg1: theme_file (mandatory)
+# Arg2: theme_name (mandatory). 
+theme_exists() {
+    if [[ ! -f $1 ]]; then
+        errlog "Can not find theme file '%s'." $1
+        exit 1
+    fi
+   
+    while read -r line; do
+        if [[ ${line} =~ "\[([-_[:alnum:]]+)\]" ]]; then
+            if [[ ${match[1]} == $2 ]]; then
+                return 0
+            fi
+        fi
+    done <$1
+
+    return 1
 }
 
 # With one argument lists the name of all themes in the theme file and
@@ -426,8 +447,9 @@ update_theme() {
 # Arg2: theme_name (optional). If submitted then the routine will check if this
 #                              name already exists in the theme file
 list_themes() {
-    declare -i check_name=0
-    declare -i n=1
+    typeset -i check_name=0
+    typeset -i n=1
+
     if [[ $# -eq 2 ]]; then
         check_name=1
     fi
@@ -436,20 +458,24 @@ list_themes() {
         errlog "Can not find theme file '%s'." $1
         exit 1
     fi
-
+   
     [[ $# -eq 1 ]] && verboselog "Listing themes in '%s'" $1
     while read -r line; do
-        if [[ ${line} =~ \[([-_[:alnum:]]+)\] ]]; then
+        if [[ ${line} =~ "\[([-_[:alnum:]]+)\]" ]]; then
             if [[ ${check_name} -eq 0 ]]; then
-                infolog "%2d. %s" $n ${BASH_REMATCH[1]}
+                infolog "%2d. %s" $n ${match[1]}
             else
-                if [[ ${BASH_REMATCH[1]} == $2 ]]; then
-                    return 1
+                if [[ ${match[1]} == $2 ]]; then
+                    infolog "Theme '${theme_name}' exists in '${ltspice_theme_file}'"
+                    return 0
                 fi
             fi
             n=$((n + 1))
         fi
     done <$1
+
+    if [[ $check_name -eq 1 ]] && errlog "Theme '${theme_name}' DOESN'T exists in '${ltspice_theme_file}'"
+
     return 0
 }
 
@@ -459,6 +485,8 @@ check_running_ltspice() {
         errlog "LTSpice is running. Please close application before changing theme."
         exit 1
     fi
+
+    return 0
 }
 
 # Copy the application configuration file to a temporary location where we do the
@@ -472,8 +500,12 @@ copy_ltspice_plist() {
         errlog "LTSpice plist file not found at '%s'" "${ltspice_plist_file}"
         exit 1
     fi
-    declare originalcopy="${ltspice_theme_dir}/$(basename ${ltspice_plist_file}.ORIGINAL)"
+    
+    typeset originalcopy="${ltspice_theme_dir}/$(basename ${ltspice_plist_file}.ORIGINAL)"
     [[ ! -f "${originalcopy}" ]] && cp "${ltspice_plist_file}" "${originalcopy}"
+
+    return 0
+
 }
 
 # Dump the entire contet of the LTSpice configuration file in human readable format
@@ -481,6 +513,8 @@ print_ltspice_plist() {
     [[ ! -f ${ltspice_plist_file} ]] && errlog "LTSpice plist file not found at '%s'." "${ltspice_plist_file}" && exit 1
     infolog "'${ltspice_plist_file}':\n"
     plutil -p ${ltspice_plist_file}
+
+    return 0
 }
 
 # Print usage
@@ -504,17 +538,14 @@ usage() {
 # Main script entry. Parse arguments and kick it off
 #
 
-declare -i OPTIND=0
-declare -i dump_flag=0
-declare -i list_flag=0
-declare -i delete_flag=0
-declare -i yes_flag=0
-declare -i quiet_flag=0
-declare -i verbose_flag=0
-declare theme_name=""
-
-# Give warning if user have a non-supported bash version
-chk_bash_version
+typeset -i OPTIND=0
+typeset -i dump_flag=0
+typeset -i list_flag=0
+typeset -i delete_flag=0
+typeset -i yes_flag=0
+typeset -i quiet_flag=0
+typeset -i verbose_flag=0
+typeset theme_name=""
 
 while [[ $OPTIND -le "$#" ]]; do
     if getopts f:pdlhqvxyV option; then
@@ -558,18 +589,35 @@ while [[ $OPTIND -le "$#" ]]; do
             ;;
         esac
     elif [[ $OPTIND -le "$#" ]]; then
-        theme_name+="${!OPTIND}"
+        theme_name+="${(P)OPTIND}"
         ((OPTIND++))
     fi
 done
+
+# Some sanity checks on args
+if [[ $list_flag -eq 1 && $delete_flag -eq 1 ]]; then
+    errlog "Cannot specify both -l and -x options at the same time."
+    exit 1
+fi
+
+if [[ $dump_flag -eq 1 && $delete_flag -eq 1 ]]; then
+    errlog "Cannot specify both -d and -x options at the same time."
+    exit 1
+fi
+
+if [[ $dump_flag -eq 1 && $list_flag -eq 1 ]]; then
+    errlog "Cannot specify both -d and -l options at the same time."
+    exit 1
+fi
+
 
 # Check and create a local theme dir as necesary
 init_theme_dir
 
 # Check if this is a newer version or it has never been installed
-chk_new_version
+chk_if_new_version
 if [ $? -eq 1 ]; then
-    verboselog "Existing Installation is older and theme file will be updated to v${version}"
+    noticelog "Existing theme file will be created or updated to v${version}"
     init_theme_file
     if [ $? -eq 0 ]; then
         echo "${version}" > "${ltspice_version_file}"
@@ -577,22 +625,15 @@ if [ $? -eq 1 ]; then
     fi
 fi
 
+
 if [[ $list_flag -eq 1 ]]; then
     if [[ ! -z ${theme_name} ]]; then
         list_themes "${ltspice_theme_file}" "${theme_name}"
-        if [[ $? -eq 1 ]]; then
-            infolog "Theme '${theme_name}' exists in '${ltspice_theme_file}'"
-        else
-            errlog "Theme '${theme_name}' DOESN'T exists in '${ltspice_theme_file}'"
-        fi
-        exit 0
+    else
+        list_themes ${ltspice_theme_file}
     fi
-    list_themes ${ltspice_theme_file}
     exit 0
 fi
-
-check_running_ltspice
-copy_ltspice_plist
 
 if [[ -z ${theme_name} ]]; then
     errlog "No theme name specified."
@@ -600,13 +641,16 @@ if [[ -z ${theme_name} ]]; then
     exit 1
 fi
 
-if [[ ${dump_flag} -eq 1 ]]; then
-    dump_current_theme ${theme_name} ${ltspice_theme_file} ${copied_plist_file}
+if [[ ${delete_flag} -eq 1 ]]; then
+    delete_theme ${ltspice_theme_file} ${theme_name}
     exit 0
 fi
 
-if [[ ${delete_flag} -eq 1 ]]; then
-    delete_theme ${ltspice_theme_file} ${theme_name}
+check_running_ltspice
+copy_ltspice_plist
+
+if [[ ${dump_flag} -eq 1 ]]; then
+    dump_current_theme ${theme_name} ${ltspice_theme_file} ${copied_plist_file}
     exit 0
 fi
 
