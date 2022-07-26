@@ -224,7 +224,6 @@ If we assume you have installed the script somewhere in your path (see [Installa
 ```
 $> themeltspice.zsh softdark
 Successfully updated new theme to 'softdark'
-$> _
 ``` 
 
 This will update the current **LTSpice** configuration file with this color schema. If you now start **LTSpice** you will see the effect of this theme switch. To restore back to the default schema just do:
@@ -232,7 +231,6 @@ This will update the current **LTSpice** configuration file with this color sche
 ```
 $> themeltspice.zsh default
 Successfully updated new theme to 'default'
-$> _
 ``` 
 
 and there is nothing more to it. The settings are done in an atomic way so a change go through successfully or not at all. This way you cannot end up with a half-updated configuration file.
@@ -250,7 +248,6 @@ By first creating a color schema in **LTSpice** it can then be saved as a new th
 ```
 $> themeltspice.zsh -d mytheme
 Dumping current color setup from 'com.analog.LTspice.App.plist' to '/Users/<USER>/.ltspice_themes/themes.txt' as theme 'mytheme'
-$> _
 ```
 
 This will store the new theme at the end of the existing theme file. If a theme with this name already exists an error message will be displayed informing about this.
@@ -321,7 +318,6 @@ $> themeltspice.zsh -p
   "WaveColor12" => 255
   "WaveColor13" => 16748287
 }
-$> _
 ```
 
 ## Deleting a theme
