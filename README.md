@@ -31,7 +31,7 @@ When you now run **LTSpice** you will see that the color palette has changed. Yo
 
 That is all there is to it for the most basic use case. Read on if you want to know more!
 
-&nbsp;
+<div class="page"/>
 
 # Content
 
@@ -43,8 +43,12 @@ That is all there is to it for the most basic use case. Read on if you want to k
 - [Theme file format](#theme-file-format)
 - [Theme reference screenshots](#theme-reference-screenshots)
 
-<div class="page"/>
+
 &nbsp;
+
+&nbsp;
+
+
 
 # Introduction
 |[back to content table](#content)|
@@ -84,8 +88,6 @@ getting familiar and learning a few important shortcut keys and 2) becoming fami
 Once those keystrokes are
 mastered it is usually substantially faster to create a circuit diagram and setup a simulation
 in the native **OSX** version than the Windows dito. The **OSX** version also have context sensitive menu (trackpad "right-click") in most places.
-
-<div class="page"/>
 
 To be fair. The **OSX** version does have some missing functionality but nothing really serious for pro or semi-pro usage. The main *functional* differences are:
 
@@ -146,6 +148,8 @@ The script uses the default location of "```~/.ltspice_themes```" to store the t
 
 The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "```-f```" option you can also specify another file location to be used a theme file. 
 
+<div class="page"/>
+
 This default theme file installed (as of this writing) contains these six themes:
 
 1. "default" (**LTSpice** default)
@@ -166,8 +170,6 @@ You can easily check if the new theme have been added correctly by listing the t
 
     $> themeltspice.zsh -l
 
-
-<div class="page"/>
 
 ## Known Limitations
 
@@ -526,6 +528,8 @@ For the above reason it is not possible to copy themes directly between the Wind
 ## 7. Theme: "redblack"
 
 ![redblack theme](screenshots/redblack.png)
+
+<div class="page"/>
 
 ## 8. Theme: "bbking"
 
