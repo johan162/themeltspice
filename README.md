@@ -96,15 +96,13 @@ To be fair. The **OSX** version does have some missing functionality but nothing
 3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.  
  
 
-**Why do this as a bash shell script?**
+**Why do this as a shell script?**
 
-Why oh why was this done as a bash shell script I can hear people cry out. 
-Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, bash is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
-Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead we claim it is perfectly possible to write readable, medium-complex programs using bash. It is of course not without its limitation since bash code can be almost unreadable when one uses all of the features available that are not commonly well known. If you stick to some good design principles (and modularization) it is perfectly readable and maintainable. Just like any language!
-If you envision a program with more than around ~1000 lines of manually written code  then bash might not be your first choice. Especially not for the very old version of bash that default ships with **OSX** (v3.2.57). A lot has happened since that version was release well over a decade ago.
+Why oh why was this done as a `zsh` script I can hear people cry out. 
+Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, `zsh` is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
+Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead, we claim it is perfectly possible to write readable, medium-complex programs using `zsh`. 
+It is of course not without its limitation since `zsh` code can be almost unreadable when one uses all the features available that are not commonly well known. 
 
->So why not write it as a `zsh` script? Mainly because the author (me) has been
-writing `bash` scripts for a **very** long time and did not right now have the time to learn the (new) ways of `zsh` to do things. Unfortunately the current script does not run directly under `zsh` so it would require some (minor) porting work.
 
 **Related work**
 
@@ -133,7 +131,7 @@ $> which themeltspice.zsh
 /usr/local/bin/themeltspice.zsh
 ```
 
-> **Tip:** Use `alias` to get a shorter command, for exmple adding   
+> **Tip:** Use `alias` to get a shorter command, for example adding   
   `$> alias ltt="/usr/local/bin/themeltspice.zsh"`  
 to your `.zshenv` will let you use `ltt` as the command name. 
 
@@ -144,7 +142,7 @@ There is no installation program for this since it is only one executable script
 
 To use the script either copy the script (```themeltspice.zsh```) to some standard location for scripts as per your ```PATH``` variable or create a new directory and copy the file there and run it from this directory.
 
-The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with six themes will be automatcally installed.
+The script uses the default location of "```~/.ltspice_themes```" to store the theme file as well as a backup file of **LTSpice** original plst file when you first run the theme script. If the directory does not exist it will be created the first time you run the script. If no theme file exist a default theme file with six themes will be automatically installed.
 
 The default theme file is named  "```themes.ltt```". The file-extension of this can be read as "**LT**Spice **T**hemes". By using the "```-f```" option you can also specify another file location to be used a theme file. 
 
@@ -160,7 +158,7 @@ This default theme file installed (as of this writing) contains these six themes
 8. "bbking"
 9. "blackred"
 
-Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional dfferent theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
+Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional different theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
 
 Later on if you find themes you like somewhere else just open the theme file and copy them at the end with one blank line between the new theme and the last existing theme.
 
@@ -207,12 +205,12 @@ There are two major use cases:
 In addition to these major use cases there are some supporting function that are available
 
 - List the names of all defined themes in a specific themes file
-- Check if a specified theme esists
-- Print the **LTSpice** binary configuration file in a human readable format
+- Check if a specified theme exists
+- Print the **LTSpice** binary configuration file in a human-readable format
 
 &nbsp;
 
-> **Note:** A copy fo the original **LTSpice** property list (plist) configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case the configuration file gest corrupt you can always restore a this as clean backup. The backup file is created the first time you run the script or if it is ever deleted.
+> **Note:** A copy fo the original **LTSpice** property list (plist) configuration file is also stored in the theme directory with the extension "```*.ORIGINAL```". In case the configuration file gets corrupt you can always restore this as a clean backup. The backup file is created the first time you run the script or if it is ever deleted.
 
 
 > **Tip:** If you ever mess up the themes file and want to restore it to the default then the easiest way is to just delete the '```/User/<USER>/.ltspice_themes/themes.ltt```' file. The next time you run '```themeltspice.zsh```' it will be restored.
@@ -237,7 +235,7 @@ Successfully updated new theme to 'default'
 $> _
 ``` 
 
-and there is nothing more to it. The settings are done in an atomic way so a change go through  successfull or not at all. This way you cannot end up with a half-updated configuration file.
+and there is nothing more to it. The settings are done in an atomic way so a change go through successfully or not at all. This way you cannot end up with a half-updated configuration file.
 
 &nbsp;
 
@@ -255,7 +253,7 @@ Dumping current color setup from 'com.analog.LTspice.App.plist' to '/Users/<USER
 $> _
 ```
 
-This will store the new theme at the end of the existing theme file. If a theme with this name already exsts an error message will be printed informing about this.
+This will store the new theme at the end of the existing theme file. If a theme with this name already exists an error message will be displayed informing about this.
 
 
 <div class="page"/>
@@ -362,7 +360,7 @@ By combining the '```-x```' option with '```-v```' option (verbose) the script w
 
 If the script is updated either by manually by downloading a new version or via `brew upgrade` the script will also update the theme file. If there is a difference then the existing theme file will be backed up to `themes.ltt.original`. 
 
-Unfortunately there is no easy (and robust) way to merge potential local additions/deletions to the theme file with an updated distributed theme file in the new version. Thisa would require a 3-way merge and it would add a lot of complexity. Very few would need that so the 80/20 rule apply.
+Unfortunately there is no easy (and robust) way to merge potential local additions/deletions to the theme file with an updated distributed theme file in the new version. This would require a 3-way merge, and it would add a lot of complexity. Very few would need that so the 80/20 rule apply.
 
 If there are local modification they will have to be manually re-applied in the new theme file. An alternative is to send new themes as a suggestion to be included in the official distribution.
 
@@ -485,7 +483,7 @@ These changes also impact the theme files in the following three ways:
 
 1. **OSX** uses the name "```GridColor```" while the windows version call it "```Grid```".  
 
-2. **OSX** uses the name "```InActiveAxisColor```" while the windows version  call it "```InActiveAxis```".   
+2. **OSX** uses the name "```InActiveAxisColor```" while the Windows version  call it "```InActiveAxis```".   
 
 3. The window version have one additional schematic color setting which is the *"Graphic Annotation"* color which does not exist in the **OSX** version. This means that the window version have schematic colors 0-13 and the **OSX** version 0-12. In practice this means that the color "```SchematicColor13```" (which is the graphic annotation color) doesn't exist in the **OSX** version.  
 
