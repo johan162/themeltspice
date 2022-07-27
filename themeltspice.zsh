@@ -31,7 +31,7 @@
 set -u
 
 # Default locations for theme and configuration files
-version="2.0.0"
+version="2.0.1"
 ltspice_plist_file=/Users/$(whoami)/Library/Preferences/com.analog.LTspice.App.plist
 ltspice_theme_dir=/Users/$(whoami)/.ltspice_themes
 ltspice_theme_file=${ltspice_theme_dir}/themes.ltt
