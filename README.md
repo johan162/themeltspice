@@ -1,5 +1,6 @@
 # README 'themeltspice.zsh'
-> **WHAT IS THIS?** ```'themeltspice.zsh'``` is a color theme manager for the **OSX** version of [LTSpice electric circuit simulator](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) which is a version of the classical SPICE (*Simulation Program with Integrated Circuit Emphasis*) simulator.  
+
+`themeltspice.zsh` is a color theme manager for the **OSX** version of [LTSpice electric circuit simulator](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) which is a version of the classical SPICE (*Simulation Program with Integrated Circuit Emphasis*) simulator.  
 [LTSpice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html) was written by **Mike Engelhardt** (now at [www.MarcusAureliusSoftware.com](www.MarcusAureliusSoftware.com)) and is made freely available by [Analog Devices](https://www.analog.com). This simulator is one of the fastest and numerically most robust circuit simulator currently available - and it is free!
 
 &nbsp;
@@ -33,6 +34,8 @@ That is all there is to it for the most basic use case. Read on if you want to k
 
 <div class="page"/>
 
+&nbsp;
+
 # Content
 
 - [Introduction](#introduction)
@@ -45,10 +48,6 @@ That is all there is to it for the most basic use case. Read on if you want to k
 
 
 &nbsp;
-
-&nbsp;
-
-
 
 # Introduction
 |[back to content table](#content)|
@@ -71,44 +70,47 @@ are stored in an **OSX** standard property list (plist) configuration file that 
 
 **A note on the **OSX** version of LTSpice:** 
 
-While much or all of the core funtionality of the simulator are exctly the same
-between the **OSX** and Window version the UI is dramatically different. In fact,
-many **OSX** users are so stumped by the apparent frugality of the **OSX** UI that they
-end up using the Windows version even on **OSX** by running it under Wine. 
-This is a mistake (but perhaps understandable if only barely).
+In online forums there have been many complaints about the OSX version of LTSpice that comes from a lack of knowledge which needs to be addressed.
 
-While the **OSX** version does not adhere to the ususal design guidelines for **OSX** programs
+While all the core functionality of the simulator are exactly the same
+between the **OSX** and Window version **the UI is dramatically different**. 
+In fact, many **OSX** users are so stumped by the apparent frugality of the **OSX** UI that they end up using the Windows version even on **OSX** by running it under Wine. 
+
+This is a mistake coming from lack of understanding. The **OSX GUI is highly functional and efficient** but, it is different than the Windows version.
+
+While the **OSX** version does not adhere to the usual design guidelines for **OSX** programs
 and requires some "getting used to" it is a highly functional UI for its purpose. After the initial "getting-used-to" experience many users will hopefully realize that the **OSX** version is superior for professionals 
-(or even serious amateurs) compared to the window version. This is mainly to do with 
-the abondonment of menus that distract the user and forces eye-focus to shift.
+(or even serious amateurs) compared to the window version. This has mainly to do with the abandonment of menus (in the OSX version) that distract the user and forces eye-focus to shift.
 
-Both the advantage and the drawback of the **OSX** UI is that it heavily relies on 1) the user 
-getting familiar and learning a few important shortcut keys and 2) becoming familiar with context sensitive menus. 
+Both the advantage and the drawback of the **OSX** UI is that it heavily relies on 
+
+1) the user getting familiar and learning a few important function keys (F2-F8) and,  
+2) becoming familiar with context-sensitive menus (right-click) 
 
 Once those keystrokes are
-mastered it is usually substantially faster to create a circuit diagram and setup a simulation
-in the native **OSX** version than the Windows dito. The **OSX** version also have context sensitive menu (trackpad "right-click") in most places.
+mastered it is usually substantially faster to create a circuit diagram and set up a simulation
+in the native **OSX** version than the Windows dito. 
 
-To be fair. The **OSX** version does have some missing functionality but nothing really serious for pro or semi-pro usage. The main *functional* differences are:
+The **OSX** version does have some missing functionality in the UI compared with the Windows version. The main *functional* differences are:
 
-1. No dialogue help to enter '```.meas```' simulation command.  
+1. No dialogue help to enter '```.meas```' simulation command so this has to be entered manually.   
+Since this could be considered an "advanced" analysis command anyone using this is likely to know (or can easily find out) the syntax to enter this command directly.
 
-2. No keyboard shortcut editor  
-
-3. Not possible to edit '```.op```' operation point labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label.  
+1. Not possible to edit '```.op```' (operation point) labels to, for example, change from the default voltage display to current through an element or perhaps change the number of decimals shown in the diagram on an '```.op```' label. This is likely to be the only missing feature that might irritate primarily students of EE. 
+   > **Theoretically**, this could be manually adjusted in the net-list file directly (since it is a text-file) but for anything other than basic textbook-examples this is hardly feasible or very error-prone.
  
+1. No keyboard shortcut editor (a very little, or never, used functionality in our experience)
+
 
 **Why do this as a shell script?**
 
-Why oh why was this done as a `zsh` script I can hear people cry out. 
-Couldn't it be written in [select favourite language] (e.g. Python). Of course it could. However, `zsh` is the lowest common denominator that doesn't require any dependencies and the guiding principle of this has been that it should run out of the box. 
-Using a self-contained shell script is an easy way to avoid the potential *"module/version-hell"* of Python. Instead, we claim it is perfectly possible to write readable, medium-complex programs using `zsh`. 
-It is of course not without its limitation since `zsh` code can be almost unreadable when one uses all the features available that are not commonly well known. 
+*"Why, oh why was this done as a `zsh`"*,  someone might argue.  
+Couldn't it be written in [select favourite language] ?. Of course, it could. However, `zsh` is the lowest common denominator on OSX that doesn't rely on any dependencies. One guiding principle in writing this has been that the script should run out of the box on any OSX system. Using a self-contained shell script is an easy way to achieve this, and we claim it is perfectly possible to write readable, medium-complex scripts using `zsh`. 
 
 
 **Related work**
 
-The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this implementation is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the **OSX** world. That state of affairs cannot stand and has now been corrected!
+The inspiration for this work comes from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). While this script is widely different in both function, form and implementation the drive to write this came out of friendly *"jealousy"* that the windows world had this but not the **OSX** world. That state of affairs cannot stand and has now been corrected!
 
 <div class="page"/>
 &nbsp;
@@ -140,7 +142,7 @@ to your `.zshenv` will let you use `ltt` as the command name.
 
 ## Direct copy
 
-There is no installation program for this since it is only one executable script file and you are free to place that file anywhere at your conveniance. 
+There is no installation program for this since it is only one executable script file, and you are free to place that file anywhere at your convenience. 
 
 To use the script either copy the script (```themeltspice.zsh```) to some standard location for scripts as per your ```PATH``` variable or create a new directory and copy the file there and run it from this directory.
 
@@ -373,7 +375,7 @@ If there are local modification they will have to be manually re-applied in the 
 The configuration file where the **LTSpice** configurations are stored
 is a binary configuration file and cannot be directly manipulated. The format
 used is a standard **OSX** *"Property List"* (plist) and as such **OSX** provides a
-command line tool that can be used to manipuate the individual fields in that
+command line tool that can be used to manipulate the individual fields in that
 property file.
 
 The **OSX** utility is called '```plutil```' and is used to read and manipulate individual 
