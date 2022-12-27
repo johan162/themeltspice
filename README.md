@@ -163,6 +163,7 @@ This default theme file installed (as of this writing) contains these six themes
 7. "redblack"
 8. "bbking"
 9. "blackred"
+10. "darkgreen"
 
 Themes no 2-4 are taken directly from the [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt). The theme "softdark" is an additional different theme I personally like to use. The last theme "blackwhite" is especially suitable when printing a circuit diagram.
 
@@ -286,6 +287,7 @@ Listing themes in '/Users/<USER>/.ltspice_themes/themes.txt''
  7. redblack
  8. bbking
  9. blackred
+ 10. darkgreen
 ```
 
 ### Checking if a named theme exists
@@ -537,6 +539,10 @@ For the above reason it is not possible to copy themes directly between the Wind
 
 ![redblack theme](screenshots/bbking.png)
 
-## 8. Theme: "blackred"
+## 9. Theme: "blackred"
 
 ![blackred theme](screenshots/blackred.png)
+
+## 10. Theme: "darkgreen"
+
+![darkgreen theme](screenshots/darkgreen.png)

@@ -117,33 +117,34 @@ init_theme_file() {
     # when theme is updated. Then do a CMD-V to past into this file.
     # cat themes.ltt|bzip2|base64 -b60|pbcopy
     cat <<NEWTHEMEFILE | base64 -d | bzcat >${ltspice_theme_file_new}
-QlpoOTFBWSZTWft+eLIABsHfgAAQAAP/8iqlDIo/79/AYAZe933e954KKPbG
-bNhw8OVCKhCaIzak9MRGmjamjRiaZBJAJqVPSCYTAAExGhhjIZDQaDRoA0AD
-QwSaVDVAAAAAAAAiiE0xKaj9UepoDQGgDQBEpoCalQANAAAA0YSGILPrQ1I9
-haSCkkUkCcpKnSGlkmIu2WZiGQytErM8qGTlasxtaameelGZvuoVNWcgGO+4
-TWuQpmoVXsQ0MLGXGQbgGY7LZaeNF6dG3dMM3aYlywGI7IajCG5MsDDUq3o7
-NSdB74/UcQ+Hhb4NOrz+ueDwiWOhuYmy+CTbhoSSXQCLTFhVHJTC+RcaZDaY
-rZq0GyoszteKY0NNYDEwaSgrWIdMKFSZQg3Vg3MTqF5pc4Si3CTx2rRvWvkl
-aapU3qdXhLFl5UoYKHpglv0lF/jSmEYyARIQJCD5uFG/VgnIORDB0KU8FkC4
-htM3HZEuIQW7rVkuhG/ImuOUCAUhQQMHSzuCJgXJ5jBemBWG3CMkGJEYSQIn
-e2HPaNmALnChvKFw7PDZgO81kq4aJ0TxGC71ow4yOYdbzol62UTWapxMiqt2
-8hpzc10jAgSQCIQHNaxHR5xdpZw2xmwTPilO7vjfYbazRxw5Z1MkHIXZlfLJ
-drh4x1W0pxd66YrCAQJp80xNj7CpaRik6iIITZ1nGhW4SFcWcirN6ppLpAvN
-GDhMFHXDzqjwMwMJl8kc4xTWCnCWcN7mHHRwp4HSZfdvSUB2xRguRK9J2QfH
-CXTXXLovTlxktcyuknawWC0O16MVDc1wIdcYtMxnigU4DglnOiiSlJ2RRXF2
-H47QrGjcJxOuxx1SesyZuWTkEtGJs8cPGKhpgt/HCODB6EKL+Hc9dSjhBfI9
-w5MWFzerpo4wOcvZ4bMPfEmEuVJMFjViNiogRNnhYwwLJLV3WlNCFezg1xxJ
-eWZy1ckqWSGXTtaNjbRtMT9bEuiAmHM5u1cOdnAUAKJWGKOJphC7iDuEHIbL
-dzZhmw47DHZuz1V6bdNln0yBAkIY0vHPpzhOkeFlLQv0vvc2eNMDb4CcO+Hw
-e4Ic+Zv6Tg1ZdQQVKvR6B0Lt27dlhs2eGtN83dt3DQDX0fvsFdaVNYMs5JCg
-tFmR1wmLxmRqy+BxMDtJaLUWrLTmjFFppRqlbPIqCFWOE7XCMa8jaNLqTEWu
-k2K0McJapqSIUrFK2+tueUyZFgdLyIP4QQj6jpnZyMsYWLBBRiIkQWLEGMYC
-VpGMsKMZY1jBpEpGFsLYJbLLGNYMKMYMYKwQYiRgxEYMjEUEBIgiPoG4wQOW
-EhsEPKAgJjBUAvo2eEOWbNHnfOMiDXYW7pmXaiL5/Yqsurk5We1Mi06Ki8kR
-YhwflCJQhXpnGviinpHaa/5UAr3YE/0UWjA6Ipq04z6y1nvdaYQtRFz9t+LI
-BXsakN9UMe6FckU7ZfOimEN9cnmk8hLzm6KeVQULcy9RRZ2/qHM9+v4IKEOh
-BQ0ilSHGVVEsLd3ZDTVe50J1GbvQKl+cVNGXjTD4i+KIvKFkUoimW+HUPaXN
-7oQKr49570P8XckU4UJD7fniyA==
+QlpoOTFBWSZTWZ78OycAB49fgEAQAAP/8iqlDIo/79/AYAaeaaa+ANDIqVq3
+w8DUIqERo0mxDEmhppk0yMAgyAFKNAAaNAAAAYDRkNBhANANNAACFKqZMAAA
+AAAADaIgkaJEep6jEYBDTQMCKTECSoDQAAAABz1RSTa0fqhdojuYiadNOoJT
+lESPBlYRB7ccULTFSZHBqMuoKnUnhIa8M73ESoSIvdyQZRpzHAQSsIYnFEOV
+V5cxWW7u2jbStoW2JZZsmSjgoujRs3QzNlDRaglhmxlgxLZIMGWWaoyWTqL3
+PpDJB69Z9rK158Oel3xKnK2sXVdAa20ZhklsAiliDzNLHkqVZxScizHDcScI
+02XI/yM4McCWTJgiRk0iDRRgZQlxwaT3ohR5OpsuRKgOeGTIOaYtOYw4XAfK
+QqZouhWTOqsTSwphpWX1HRfiihpjGxJoYxRBA93GiCnfrAQVA5BLfAkHoBHm
+AsE4OrA4QlAkC073gaEgK3nspvrtQhCVJCA0acPIdQKmQDT3OWpYSbcdIYiF
+gYFggiAgfPMLnkm2wKOOJGooAt29dth5vRlmg0UcXEzpfMjp3A70d5vpWL5S
+VeuNaYG7y7DkOnNGvCGAgIiEIUgXM6uHT04u0wFtXUZwET0GXdJ1rYbCcyY4
+1bljxLYHQUxpDuBzbWOPWA3VDLdPjpgAhgSAixcveFilrLGAMCNRcbTMwYst
+RWiqyoaUCgvbvc3hqZZShgKjTZwiyXxt54K8TMBY5exAZu5CbZbHDYVTbfg2
+D1PCLy+3dDKHmGTLRCT6HyIWdtjY68dBkqXGW/NM5NLQ41YWFwGdSxQbPPQJ
+48cYkfTmkq5S5UcXRYLWCzkTwY2ctk3HRhOuNJXohybhgmMt5tRHDBRjFtLo
+YRwIUIhR0wAV1sW230CRL5fhjPjmJeMAHYfLcl4AMlE0mjjAc5XJYdtvnRju
+RsqIjLUm5IcBUKEDwstrjgEsWqIbCq6pCvtydeeYtQk6FnQgjCGQ9ObjJnw7
+qYn9MuAt3gJh7ju2nrnLwJQMFmlozex4tB2VHZIXFPeZFu6b0bjGclj59F4t
+KcnBDsNpNJtNY2HQz2M4RymcGAcQV6a3uNnWWA29ROPrp7/tgnPka9DwLIdW
+mrVnc7pd1o0aNEGYMHJdVvporZwWBGLhXcQCNMEPFBDVuGLCQZNNpYdppEBw
+lrO0tjRHZlGSsmTJDgZgyO0cFnF20KrFTFKBGRZakmrfIkuVhxQMgaFKMg3c
+mzMTeaZlp008z3ma3cMJlDr8InsEkfIxssWDGTGhkomJlgppggghIyxZnBxm
+cbJhsGowZMwcwYyxnGbIYcZkmSiGCYlhmZklgmggIZJiHEKoDBD1EHUCZoAi
+m6AohfNqpIcseOPO6uMiDRUZ/msxHwIAav0FAl2cPKrZPIznQEA5CAEQ3v4J
+EmEosw1yjxEH2j7mnuKIUa72vqoAUz3nQQdFm3B2lpNlucvhr0CAGXx9bWSI
+B4LRNuCFHkSiQg3RbxBxCUU2EbZGYi2Y8Ig50REnsi6FACODwJZNL7p7giJD
+4CIngg0Q56KAPuHs+r3/9E9hq5yiWYSnzMoN2VQasXCeG6LkEAMwk4gyIPXX
+HyH4zRvQkAoHvbx+An/i7kinChIT34dk4A==
 NEWTHEMEFILE
      if [[ ! -f ${ltspice_theme_file} ]]; then
         # Nothing exists since before so just install it
@@ -250,7 +251,6 @@ dump_current_theme() {
     echo "" >>${theme_file}
 
     return 0
-
 }
 
 # Ask user a Y/N question
@@ -408,7 +408,7 @@ update_theme() {
             errlog "Could not copy '${copied_ltspice_file}' to '${ltspice_plist_file}'."
             exit 1
         fi
-        infolog "Successfully updated new theme to '%s'\n" ${theme_name}
+        infolog "Successfully updated new theme to '%s'" ${theme_name}
     else
         errlog "Could not update theme, no changes made."
         exit 1
