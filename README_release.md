@@ -5,7 +5,7 @@
 1. Update the `version` variable at the top of the script
 1. Generate a PDF version of the README.md
 1.  Commit & Push
-1. Tag the version  
+1. Tag the version, e.g.  
     ```
     git tag v2.0.3 -m "v2.0.3"
 1. Push the tag, e.g.  
