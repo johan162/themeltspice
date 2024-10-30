@@ -56,7 +56,7 @@ This is not meant to be an introduction to either the usage or function of
 the electric circuit simulator **LTSpice**. 
 It is therefore assumed you have installed and have basic knowledge of the **OSX** version of **LTSpice**.
 
->**Note:** This theme manager is unique to **OSX** and will not in any shape or form work  on a the Window version of **LTSpice**. Instead see 
+>**Note:** This theme manager is unique to **OSX** and will not in any shape or form work on the Window version of **LTSpice**. Instead see 
 [Windows **LTSpice** theme manager](https://github.com/sakabug/LTspice-themes/blob/main/LTspice-themes.txt) 
 if you are looking for a Windows based **LTSpice** theme manager.
 
@@ -545,12 +545,16 @@ For the above reason it is not possible to copy themes directly between the Wind
 
 ![blackred theme](screenshots/blackred.png)
 
+<div class="page"/>
+
 ## 10. Theme: "darkgreen"
 
 ![darkgreen theme](screenshots/darkgreen.png)
+
+<div class="page"/>
 
 ## 11. Theme: "matlab"
 
 Note: Very close to the *blackwhite* theme but light yellow components and full colors for plots. Credit: "owiecc" from the EEVblog.
 
-![darkgreen theme](screenshots/matlab.png)
+![matlab theme](screenshots/matlab.png)
